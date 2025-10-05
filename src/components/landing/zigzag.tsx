@@ -11,7 +11,7 @@ export function Zigzag({ className, ...props }: React.SVGProps<SVGSVGElement>) {
       className={cn("pointer-events-none", className)}
       {...props}
     >
-      <g transform="rotate(45 100 50)">
+      <g>
         <path
           d="M0 50 Q 25 25, 50 50 T 100 50 T 150 50 T 200 50"
           stroke="currentColor"

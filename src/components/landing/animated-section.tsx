@@ -67,8 +67,8 @@ export function AnimatedSection({ children, className, showNotes = false, id, sh
       {showWaves && <WaveAnimation />}
       {showZigzag && (
         <>
-          <Zigzag className="absolute -top-8 -left-16 text-primary/20" />
-          <Zigzag className="absolute -bottom-8 -right-16 rotate-180 text-primary/20" />
+          <Zigzag className="absolute -top-10 -left-10 text-primary/20" />
+          <Zigzag className="absolute -bottom-10 -right-10 rotate-180 text-primary/20" />
         </>
       )}
       {showNotes && (
