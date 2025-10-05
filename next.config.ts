@@ -36,6 +36,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  devServer: {
+    allowedHosts: 'all',
+  },
 };
 
 export default nextConfig;

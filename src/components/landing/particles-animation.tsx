@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import Particles, { initParticlesEngine } from "react-tsparticles";
+import Particles from "react-tsparticles";
 import {
   type Container,
   type ISourceOptions,
+  initParticlesEngine,
 } from "@tsparticles/engine";
-import { loadSlim } from "@tsparticles/slim";
+import { loadSlim } from "tsparticles-slim";
 
 export const ParticlesAnimation = () => {
   const [init, setInit] = useState(false);
@@ -18,9 +19,7 @@ export const ParticlesAnimation = () => {
     });
   }, []);
 
-  const particlesLoaded = async (container?: Container): Promise<void> => {
-    console.log(container);
-  };
+  const particlesLoaded = async (container?: Container): Promise<void> => {};
 
   const options: ISourceOptions = useMemo(
     () => ({
