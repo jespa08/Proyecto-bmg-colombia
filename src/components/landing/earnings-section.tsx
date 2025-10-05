@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { WalletCards, Rocket, Crown, CheckCircle2 } from "lucide-react";
+import Image from "next/image";
 
 const levels = [
   {
@@ -30,7 +31,14 @@ const levels = [
 
 export function EarningsSection() {
   return (
-    <section id="earnings" className="w-full py-16 md:py-24 lg:py-32">
+    <section id="earnings" className="relative w-full py-16 md:py-24 lg:py-32">
+       <Image
+        src="https://storage.googleapis.com/project-spark-308622-users-code/user-2d2d3c90-e5a9-4598-a83a-438902d184cf/src/assets/logo-bmg-colombia-small.png"
+        alt="BMG Colombia"
+        width={60}
+        height={60}
+        className="absolute top-4 right-4"
+      />
       <div className="container mx-auto px-4 md:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tighter text-foreground sm:text-4xl md:text-5xl">

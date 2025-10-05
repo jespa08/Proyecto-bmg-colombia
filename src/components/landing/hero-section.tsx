@@ -1,13 +1,18 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 export function HeroSection() {
   return (
     <section className="relative w-full bg-gradient-to-b from-dark-blue to-black text-white">
       <div className="container mx-auto flex min-h-dvh flex-col items-center justify-center px-4 text-center">
-        <h1 className="font-headline text-5xl font-bold tracking-tighter text-white md:text-6xl">
-          BMG<span className="text-primary">.</span>
-        </h1>
+        <Image 
+          src="https://storage.googleapis.com/project-spark-308622-users-code/user-2d2d3c90-e5a9-4598-a83a-438902d184cf/src/assets/logo.png" 
+          alt="BMG Logo" 
+          width={200} 
+          height={200} 
+          className="mb-6"
+        />
         <h2 className="mt-6 font-headline max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
           Impulsando la música global. Creando oportunidades reales.
         </h2>
