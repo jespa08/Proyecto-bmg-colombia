@@ -1,10 +1,21 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Waves } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <section className="relative w-full bg-gradient-to-b from-dark-blue to-black text-white">
-      <div className="container mx-auto flex min-h-dvh flex-col items-center justify-center px-4 text-center">
+    <section className="relative w-full bg-gradient-to-b from-dark-blue to-black text-white overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black to-transparent" />
+        <div className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 text-primary/10 animate-pulse-slow">
+            <Waves className="w-full h-full" />
+        </div>
+        <div className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 text-primary/10 animate-pulse-slow animation-delay-2000">
+            <Waves className="w-full h-full" />
+        </div>
+      </div>
+      <div className="relative z-10 container mx-auto flex min-h-dvh flex-col items-center justify-center px-4 text-center">
         <h1 className="font-headline text-5xl font-bold tracking-tighter text-white md:text-6xl">
           BMG<span className="text-primary">.</span>
         </h1>
