@@ -7,7 +7,7 @@ export function HeroSection() {
     <section className="relative w-full bg-gradient-to-b from-dark-blue to-black text-white">
       <div className="container mx-auto flex min-h-dvh flex-col items-center justify-center px-4 text-center">
         <Image 
-          src="https://storage.googleapis.com/project-spark-308622-users-code/user-2d2d3c90-e5a9-4598-a83a-438902d184cf/src/assets/logo.png" 
+          src="https://storage.googleapis.com/project-spark-308622-users-code/user-2d2d3c90-e5a9-4598-a83a-438902d184cf/src/assets/logo-bmg-colombia-small.png" 
           alt="BMG Logo" 
           width={200} 
           height={200} 
