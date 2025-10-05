@@ -20,7 +20,14 @@ export function CtaSection() {
           </Button>
         </Link>
         <p className="mt-4 max-w-2xl font-bold text-primary-foreground/90 md:text-lg/relaxed">
-          Si deseas mayor información y/o pasar a empleado formal contáctame
+          Si deseas mayor información y/o pasar a empleado formal{" "}
+          <a
+            href="mailto:jpanalystideasproductivas@gmail.com"
+            className="underline hover:text-white"
+          >
+            contáctame
+          </a>
+          .
         </p>
       </div>
     </section>
