@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { WalletCards, Rocket, CheckCircle2 } from "lucide-react";
+import { WalletCards, Rocket, Crown, CheckCircle2 } from "lucide-react";
 
 const levels = [
   {
@@ -18,6 +18,14 @@ const levels = [
     earnings: "$54.000 diarios",
     contract: "Contrato por 3 años",
   },
+  {
+    icon: Crown,
+    title: "Nivel B2",
+    investment: "$3.970.000",
+    tasks: "24 tareas diarias",
+    earnings: "$144.000 diarios",
+    contract: "Contrato por 3 años",
+  },
 ];
 
 export function EarningsSection() {
@@ -32,7 +40,7 @@ export function EarningsSection() {
             Invierte en tu futuro y en el de la música. Gana dinero apoyando a nuevos artistas.
           </p>
         </div>
-        <div className="mx-auto mt-12 grid max-w-5xl gap-8 md:grid-cols-2">
+        <div className="mx-auto mt-12 grid max-w-5xl gap-8 md:grid-cols-2 lg:grid-cols-3">
           {levels.map((level) => (
             <Card key={level.title} className="flex flex-col border-2 border-primary/50 bg-transparent shadow-lg transition-all hover:border-primary hover:shadow-primary/20">
               <CardHeader className="flex-row items-center gap-4">
@@ -51,7 +59,7 @@ export function EarningsSection() {
           ))}
         </div>
         <p className="mt-8 text-center text-muted-foreground">
-          Tareas de lunes a sábado. Pagos semanales por Nequi o Bancolombia.
+          Los usuarios de nivel B pueden retirar los jueves y los de nivel A los viernes. Pagos fáciles, rápidos y seguros.
         </p>
       </div>
     </section>

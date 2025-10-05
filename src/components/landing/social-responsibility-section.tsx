@@ -1,15 +1,15 @@
-import { HeartHandshake, School, Briefcase, Verified } from "lucide-react";
+import { HeartHandshake, School, Briefcase, BookOpen } from "lucide-react";
 
 const commitments = [
   {
     icon: HeartHandshake,
     title: "Asistencia a Zonas Vulnerables",
-    description: "Llevamos ayuda y oportunidades a comunidades que más lo necesitan.",
+    description: "En Colombia, participamos en la asistencia a zonas afectadas por desastres, entregando alimentos y ayuda humanitaria.",
   },
   {
     icon: School,
-    title: "Apoyo a la Educación Infantil",
-    description: "Fomentamos el futuro de los niños a través de programas educativos.",
+    title: "Apoyo a la Educación Musical",
+    description: "Impulsamos la educación musical en comunidades vulnerables para fomentar el futuro de los niños.",
   },
   {
     icon: Briefcase,
@@ -17,9 +17,9 @@ const commitments = [
     description: "Creamos oportunidades de trabajo accesibles para todos, sin importar su ubicación.",
   },
   {
-    icon: Verified,
-    title: "Proyectos Verificados",
-    description: "Garantizamos la transparencia con donaciones y proyectos culturales verificables.",
+    icon: BookOpen,
+    title: "BMG Talent Bootcamp",
+    description: "Desarrollamos programas de formación en producción musical, marketing y derechos de autor.",
   },
 ];
 
@@ -32,7 +32,7 @@ export function SocialResponsibilitySection() {
             Responsabilidad Social
           </h2>
           <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
-            Extractos de nuestro Libro Blanco Estratégico para Colombia.
+            BMG apoya causas sociales, impulsa la educación y brinda empleo remoto inclusivo.
           </p>
         </div>
         <div className="mx-auto mt-12 grid max-w-5xl gap-x-8 gap-y-12 sm:grid-cols-2 lg:max-w-none lg:grid-cols-4">

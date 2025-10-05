@@ -7,7 +7,7 @@ export function ProjectSection() {
             Nuestro Proyecto en Colombia
           </h2>
           <p className="mt-4 md:text-xl/relaxed">
-            Este proyecto apoya a artistas emergentes mediante una plataforma donde los usuarios escuchan canciones durante 1 minuto. Las tareas son <span className="font-semibold text-primary">simples, seguras y permiten generar ingresos constantes</span> mientras contribuyes al desarrollo musical.
+            Este proyecto apoya a artistas emergentes mediante una plataforma donde los usuarios escuchan canciones de 1 minuto. Las tareas son <span className="font-semibold text-primary">sencillas y permiten generar ingresos</span> mientras apoyas el crecimiento del sector musical. Se trabaja de lunes a sábado y los pagos se procesan semanalmente por Nequi o Bancolombia.
           </p>
         </div>
       </div>

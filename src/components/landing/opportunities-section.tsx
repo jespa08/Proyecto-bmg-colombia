@@ -1,21 +1,21 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PiggyBank, TrendingUp, Award } from "lucide-react";
+import { Music, Briefcase, BarChart } from "lucide-react";
 
 const opportunities = [
   {
-    icon: PiggyBank,
-    title: "Fondos de Inversión",
-    description: "Invierte en fondos con retornos estables, similar a un CDT, apoyando el crecimiento de la industria musical.",
+    icon: Music,
+    title: "Fondo Notas Doradas",
+    description: "BMG invierte en obras musicales a nivel global, generando dividendos estables que se distribuyen proporcionalmente entre los empleados. Crece con BMG y disfruta de ingresos pasivos a largo plazo.",
   },
   {
-    icon: TrendingUp,
-    title: "Acciones de la Compañía",
-    description: "Sé parte de nuestro éxito. Próximamente, BMG cotizará en el mercado Nasdaq de EE. UU.",
+    icon: Briefcase,
+    title: "Opciones sobre Acciones BMG",
+    description: "Los empleados a tiempo completo pueden acceder a planes de opciones sobre acciones de BMG, beneficiándose del crecimiento de la compañía, proyectada para cotizar en Nasdaq EE. UU.",
   },
   {
-    icon: Award,
-    title: "Eventos y Premios",
-    description: "Participa en actividades sociales, concursos y eventos exclusivos para nuestra comunidad con increíbles premios.",
+    icon: BarChart,
+    title: "Modelo de Ingresos Transparente",
+    description: "Los ingresos de BMG provienen de tarifas de promoción. Entre el 60% y 80% de los ingresos se distribuye directamente como salario a los trabajadores.",
   },
 ];
 

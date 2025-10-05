@@ -6,6 +6,7 @@ import { OpportunitiesSection } from '@/components/landing/opportunities-section
 import { SocialResponsibilitySection } from '@/components/landing/social-responsibility-section';
 import { CtaSection } from '@/components/landing/cta-section';
 import { Footer } from '@/components/landing/footer';
+import { TestimonialSection } from '@/components/landing/testimonial-section';
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <EarningsSection />
         <OpportunitiesSection />
         <SocialResponsibilitySection />
+        <TestimonialSection />
         <CtaSection />
       </main>
       <Footer />
