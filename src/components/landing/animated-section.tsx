@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Music2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
@@ -12,7 +12,29 @@ interface AnimatedSectionProps {
   id?: string;
 }
 
+interface NoteStyle {
+  left: string;
+  top: string;
+  scale: number;
+  size: number;
+}
+
 export function AnimatedSection({ children, className, showNotes = false, id }: AnimatedSectionProps) {
+  const [noteStyles, setNoteStyles] = useState<NoteStyle[]>([]);
+
+  useEffect(() => {
+    if (showNotes) {
+      const styles = Array.from({ length: 8 }).map(() => ({
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        scale: Math.random() * 0.5 + 0.5,
+        size: 30 + Math.random() * 40,
+        duration: Math.random() * 2 + 3,
+      }));
+      setNoteStyles(styles);
+    }
+  }, [showNotes]);
+
   const noteVariants = {
     initial: { y: 20, opacity: 0 },
     animate: (i: number) => ({
@@ -20,7 +42,7 @@ export function AnimatedSection({ children, className, showNotes = false, id }: 
       opacity: [0, 0.5, 0],
       transition: {
         delay: i * 0.2,
-        duration: Math.random() * 2 + 3,
+        duration: noteStyles[i]?.duration || 4,
         repeat: Infinity,
         repeatType: "loop",
         ease: "easeInOut",
@@ -39,21 +61,21 @@ export function AnimatedSection({ children, className, showNotes = false, id }: 
     >
       {showNotes && (
         <div className="absolute inset-0 z-0 pointer-events-none">
-          {[...Array(8)].map((_, i) => (
+          {noteStyles.map((style, i) => (
             <motion.div
               key={i}
               className="absolute text-primary/20"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                scale: Math.random() * 0.5 + 0.5,
+                left: style.left,
+                top: style.top,
+                scale: style.scale,
               }}
               variants={noteVariants}
               initial="initial"
               animate="animate"
               custom={i}
             >
-              <Music2 size={30 + Math.random() * 40} />
+              <Music2 size={style.size} />
             </motion.div>
           ))}
         </div>
