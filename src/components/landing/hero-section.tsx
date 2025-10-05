@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { WaveAnimation } from "./wave-animation";
+import { AnimatedSection } from "./animated-section";
 
 export function HeroSection() {
   return (
-    <section className="relative w-full bg-gradient-to-b from-dark-blue to-black text-white overflow-hidden">
-      <WaveAnimation />
-      <div className="relative z-10 container mx-auto flex min-h-dvh flex-col items-center justify-center px-4 text-center">
+    <AnimatedSection showWaves className="bg-gradient-to-b from-dark-blue to-black text-white">
+      <div className="container mx-auto flex min-h-dvh flex-col items-center justify-center px-4 text-center">
         <h1 className="font-headline text-5xl font-bold tracking-tighter text-white md:text-6xl">
           BMG<span className="text-primary">.</span>
         </h1>
@@ -22,6 +21,6 @@ export function HeroSection() {
           </Button>
         </Link>
       </div>
-    </section>
+    </AnimatedSection>
   );
 }
