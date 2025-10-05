@@ -4,12 +4,14 @@ import { motion } from "framer-motion";
 import { Music2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import React, { useState, useEffect } from "react";
+import { WaveAnimation } from "./wave-animation";
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
   className?: string;
   showNotes?: boolean;
   id?: string;
+  showWaves?: boolean;
 }
 
 interface NoteStyle {
@@ -17,14 +19,15 @@ interface NoteStyle {
   top: string;
   scale: number;
   size: number;
+  duration: number;
 }
 
-export function AnimatedSection({ children, className, showNotes = false, id }: AnimatedSectionProps) {
+export function AnimatedSection({ children, className, showNotes = false, id, showWaves = false }: AnimatedSectionProps) {
   const [noteStyles, setNoteStyles] = useState<NoteStyle[]>([]);
 
   useEffect(() => {
     if (showNotes) {
-      const styles = Array.from({ length: 8 }).map(() => ({
+      const styles: NoteStyle[] = Array.from({ length: 8 }).map(() => ({
         left: `${Math.random() * 100}%`,
         top: `${Math.random() * 100}%`,
         scale: Math.random() * 0.5 + 0.5,
@@ -59,6 +62,7 @@ export function AnimatedSection({ children, className, showNotes = false, id }: 
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5 }}
     >
+      {showWaves && <WaveAnimation />}
       {showNotes && (
         <div className="absolute inset-0 z-0 pointer-events-none">
           {noteStyles.map((style, i) => (

@@ -15,25 +15,25 @@ export default function Home() {
     <div className="flex min-h-dvh flex-col bg-background">
       <main className="flex-1">
         <HeroSection />
-        <AnimatedSection id="about" className="py-16 md:py-24 lg:py-32">
+        <AnimatedSection id="about" className="py-16 md:py-24 lg:py-32" showWaves>
           <AboutSection />
         </AnimatedSection>
-        <AnimatedSection id="project" className="bg-dark-blue text-white py-16 md:py-24 lg:py-32" showNotes>
+        <AnimatedSection id="project" className="bg-dark-blue text-white py-16 md:py-24 lg:py-32" showNotes showWaves>
           <ProjectSection />
         </AnimatedSection>
-        <AnimatedSection id="revenue-model" className="py-16 md:py-24 lg:py-32 bg-background text-foreground">
+        <AnimatedSection id="revenue-model" className="py-16 md:py-24 lg:py-32 bg-background text-foreground" showWaves>
           <RevenueModelSection />
         </AnimatedSection>
-        <AnimatedSection id="earnings" className="bg-dark-blue text-white py-16 md:py-24 lg:py-32" showNotes>
+        <AnimatedSection id="earnings" className="bg-dark-blue text-white py-16 md:py-24 lg:py-32" showNotes showWaves>
           <EarningsSection />
         </AnimatedSection>
-        <AnimatedSection id="opportunities" className="bg-muted py-16 md:py-24 lg:py-32">
+        <AnimatedSection id="opportunities" className="bg-muted py-16 md:py-24 lg:py-32" showWaves>
           <OpportunitiesSection />
         </AnimatedSection>
-        <AnimatedSection id="social" className="py-16 md:py-24 lg:py-32">
+        <AnimatedSection id="social" className="py-16 md:py-24 lg:py-32" showWaves>
           <SocialResponsibilitySection />
         </AnimatedSection>
-        <AnimatedSection id="testimonial" className="py-16 md:py-24 lg:py-32">
+        <AnimatedSection id="testimonial" className="py-16 md:py-24 lg:py-32" showWaves>
           <TestimonialSection />
         </AnimatedSection>
         <CtaSection />

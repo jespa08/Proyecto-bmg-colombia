@@ -1,56 +1,11 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Waves } from "lucide-react";
+import { WaveAnimation } from "./wave-animation";
 
 export function HeroSection() {
   return (
     <section className="relative w-full bg-gradient-to-b from-dark-blue to-black text-white overflow-hidden">
-      <div className="absolute inset-0 z-0 opacity-20">
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black to-transparent" />
-        <div
-          className="absolute top-0 left-0 w-[200%] h-full flex"
-          style={{
-            animation: "wave-scroll 20s linear infinite",
-          }}
-        >
-          <div
-            className="w-1/2 h-full bg-contain bg-no-repeat bg-left-top"
-            style={{
-              backgroundImage:
-                "radial-gradient(ellipse 50% 80% at 30% 50%, hsl(var(--primary) / 0.2), transparent)",
-            }}
-          ></div>
-          <div
-            className="w-1/2 h-full bg-contain bg-no-repeat bg-right-bottom"
-            style={{
-              backgroundImage:
-                "radial-gradient(ellipse 50% 80% at 70% 50%, hsl(var(--primary) / 0.2), transparent)",
-            }}
-          ></div>
-        </div>
-        <div
-          className="absolute top-0 left-0 w-[200%] h-full flex"
-          style={{
-            animation: "wave-scroll 25s linear infinite reverse",
-          }}
-        >
-          <div
-            className="w-1/2 h-full bg-contain bg-no-repeat bg-center-top"
-            style={{
-              backgroundImage:
-                "radial-gradient(ellipse 60% 70% at 20% 60%, hsl(var(--accent) / 0.15), transparent)",
-            }}
-          ></div>
-          <div
-            className="w-1/2 h-full bg-contain bg-no-repeat bg-center-bottom"
-            style={{
-              backgroundImage:
-                "radial-gradient(ellipse 60% 70% at 80% 40%, hsl(var(--accent) / 0.15), transparent)",
-            }}
-          ></div>
-        </div>
-      </div>
+      <WaveAnimation />
       <div className="relative z-10 container mx-auto flex min-h-dvh flex-col items-center justify-center px-4 text-center">
         <h1 className="font-headline text-5xl font-bold tracking-tighter text-white md:text-6xl">
           BMG<span className="text-primary">.</span>
