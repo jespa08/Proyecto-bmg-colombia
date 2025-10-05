@@ -19,6 +19,9 @@ export function CtaSection() {
             Registrarme Ahora
           </Button>
         </Link>
+        <p className="mt-4 max-w-2xl text-primary-foreground/90 md:text-lg/relaxed">
+          si deseas mayor información y/o pasar a empleado formal contáctame
+        </p>
       </div>
     </section>
   );

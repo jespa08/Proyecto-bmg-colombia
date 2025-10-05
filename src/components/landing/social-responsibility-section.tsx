@@ -1,4 +1,4 @@
-import { HeartHandshake, School, Briefcase, BookOpen } from "lucide-react";
+import { HeartHandshake, School, Briefcase } from "lucide-react";
 
 const commitments = [
   {
@@ -16,11 +16,6 @@ const commitments = [
     title: "Empleo Remoto Inclusivo",
     description: "Creamos oportunidades de trabajo accesibles para todos, sin importar su ubicación.",
   },
-  {
-    icon: BookOpen,
-    title: "BMG Talent Bootcamp",
-    description: "Desarrollamos programas de formación en producción musical, marketing y derechos de autor.",
-  },
 ];
 
 export function SocialResponsibilitySection() {
@@ -35,7 +30,7 @@ export function SocialResponsibilitySection() {
             BMG apoya causas sociales, impulsa la educación y brinda empleo remoto inclusivo.
           </p>
         </div>
-        <div className="mx-auto mt-12 grid max-w-5xl gap-x-8 gap-y-12 sm:grid-cols-2 lg:max-w-none lg:grid-cols-4">
+        <div className="mx-auto mt-12 grid max-w-5xl gap-x-8 gap-y-12 sm:grid-cols-2 lg:max-w-none lg:grid-cols-3">
           {commitments.map((commitment) => (
             <div key={commitment.title} className="flex flex-col items-center text-center">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
