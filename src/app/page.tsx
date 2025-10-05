@@ -3,6 +3,7 @@ import { AboutSection } from '@/components/landing/about-section';
 import { ProjectSection } from '@/components/landing/project-section';
 import { EarningsSection } from '@/components/landing/earnings-section';
 import { OpportunitiesSection } from '@/components/landing/opportunities-section';
+import { RevenueModelSection } from '@/components/landing/revenue-model-section';
 import { SocialResponsibilitySection } from '@/components/landing/social-responsibility-section';
 import { CtaSection } from '@/components/landing/cta-section';
 import { Footer } from '@/components/landing/footer';
@@ -17,6 +18,7 @@ export default function Home() {
         <ProjectSection />
         <EarningsSection />
         <OpportunitiesSection />
+        <RevenueModelSection />
         <SocialResponsibilitySection />
         <TestimonialSection />
         <CtaSection />

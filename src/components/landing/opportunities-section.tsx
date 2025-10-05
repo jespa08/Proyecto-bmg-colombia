@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Music, Briefcase, BarChart } from "lucide-react";
+import { Music, Briefcase } from "lucide-react";
 
 const opportunities = [
   {
@@ -11,11 +11,6 @@ const opportunities = [
     icon: Briefcase,
     title: "Opciones sobre Acciones BMG",
     description: "Los empleados a tiempo completo pueden acceder a planes de opciones sobre acciones de BMG, beneficiándose del crecimiento de la compañía, proyectada para cotizar en Nasdaq EE. UU.",
-  },
-  {
-    icon: BarChart,
-    title: "Modelo de Ingresos Transparente",
-    description: "Los ingresos de BMG provienen de tarifas de promoción. Entre el 60% y 80% de los ingresos se distribuye directamente como salario a los trabajadores.",
   },
 ];
 
@@ -31,7 +26,7 @@ export function OpportunitiesSection() {
             BMG ofrece más formas de crecer y participar.
           </p>
         </div>
-        <div className="mx-auto mt-12 grid max-w-5xl gap-8 md:grid-cols-3">
+        <div className="mx-auto mt-12 grid max-w-5xl gap-8 md:grid-cols-2">
           {opportunities.map((opportunity) => (
             <Card key={opportunity.title} className="text-center transition-transform hover:scale-105 hover:shadow-xl">
               <CardHeader>

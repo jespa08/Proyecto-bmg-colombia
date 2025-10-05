@@ -1,3 +1,10 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "revenue-model-diagram",
+      "description": "Diagrama del modelo de ingresos de BMG",
+      "imageUrl": "https://storage.googleapis.com/project-spark-308622-users-code/user-2d2d3c90-e5a9-4598-a83a-438902d184cf/src/assets/revenue-model.png",
+      "imageHint": "revenue diagram"
+    }
+  ]
 }
