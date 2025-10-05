@@ -1,8 +1,5 @@
-import Image from "next/image";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export function RevenueModelSection() {
-    const revenueModelImage = PlaceHolderImages.find(p => p.id === "revenue-model-diagram");
   return (
     <section id="revenue-model" className="w-full py-16 md:py-24 lg:py-32 bg-background text-foreground">
       <div className="container mx-auto px-4 md:px-6">
@@ -15,17 +12,6 @@ export function RevenueModelSection() {
           </p>
         </div>
         <div className="mx-auto mt-12 max-w-5xl">
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
-             {revenueModelImage && (
-                <Image
-                    src={revenueModelImage.imageUrl}
-                    alt={revenueModelImage.description}
-                    fill
-                    className="object-contain"
-                    data-ai-hint={revenueModelImage.imageHint}
-                />
-            )}
-          </div>
           <p className="mt-8 text-center text-muted-foreground">
             De los ingresos obtenidos, destinamos entre el 20% y el 40% al funcionamiento de la plataforma, mientras que el 60% al 80% restante se distribuye como salario entre los empleados. Esta distribución se realiza de acuerdo con el nivel y la contribución de cada uno, asegurando que quienes más se esfuerzan reciban la recompensa que merecen.
           </p>

@@ -16,9 +16,9 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <ProjectSection />
+        <RevenueModelSection />
         <EarningsSection />
         <OpportunitiesSection />
-        <RevenueModelSection />
         <SocialResponsibilitySection />
         <TestimonialSection />
         <CtaSection />
