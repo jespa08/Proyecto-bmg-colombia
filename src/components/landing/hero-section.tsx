@@ -4,8 +4,24 @@ import { AnimatedSection } from "./animated-section";
 
 export function HeroSection() {
   return (
-    <AnimatedSection showWaves className="bg-gradient-to-b from-dark-blue to-black text-white">
-      <div className="container mx-auto flex min-h-dvh flex-col items-center justify-center px-4 text-center">
+    <AnimatedSection showWaves className="relative overflow-hidden bg-gradient-to-b from-dark-blue to-black text-white">
+      <div
+        aria-hidden="true"
+        className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2"
+      >
+        <div
+          className="h-[300px] w-[300px] rounded-full border-[80px] border-primary/10"
+        />
+      </div>
+      <div
+        aria-hidden="true"
+        className="absolute right-0 top-0 translate-x-1/2 -translate-y-1/2"
+      >
+        <div
+          className="h-[400px] w-[400px] rounded-full border-[100px] border-primary/10"
+        />
+      </div>
+      <div className="container relative mx-auto flex min-h-dvh flex-col items-center justify-center px-4 text-center">
         <h1 className="font-headline text-5xl font-bold tracking-tighter text-white md:text-6xl">
           BMG<span className="text-primary">.</span>
         </h1>
