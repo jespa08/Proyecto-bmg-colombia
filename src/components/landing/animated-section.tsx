@@ -5,7 +5,6 @@ import { Music2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import React, { useState, useEffect, useMemo } from "react";
 import { WaveAnimation } from "./wave-animation";
-import { ParticlesAnimation } from "./particles-animation";
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
@@ -63,7 +62,6 @@ export function AnimatedSection({ children, className, showNotes = false, id, sh
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5 }}
     >
-      <ParticlesAnimation />
       {showWaves && <WaveAnimation />}
       {showNotes && (
         <div className="absolute inset-0 z-0 pointer-events-none">
