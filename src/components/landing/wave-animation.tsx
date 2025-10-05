@@ -1,8 +1,6 @@
 export function WaveAnimation() {
     return (
         <div className="absolute inset-0 z-0 opacity-20">
-            <div className="absolute inset-0 bg-black/50" />
-            <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black to-transparent" />
             <div
             className="absolute top-0 left-0 w-[200%] h-full flex"
             style={{
