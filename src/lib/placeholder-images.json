@@ -5,6 +5,36 @@
       "description": "Diagrama del modelo de ingresos de BMG",
       "imageUrl": "https://storage.googleapis.com/project-spark-308622-users-code/user-2d2d3c90-e5a9-4598-a83a-438902d184cf/src/assets/revenue-model.png",
       "imageHint": "revenue diagram"
+    },
+    {
+      "id": "vinyl-record",
+      "description": "Disco de vinilo representando los derechos de autor.",
+      "imageUrl": "https://images.unsplash.com/photo-1645523906730-894addb64d64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx2aW55bCUyMHJlY29yZHxlbnwwfHx8fDE3NTk2OTk2MTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "vinyl record"
+    },
+    {
+      "id": "music-studio",
+      "description": "Estudio de música profesional.",
+      "imageUrl": "https://images.unsplash.com/photo-1548502632-6b93092aad0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtdXNpYyUyMHN0dWRpb3xlbnwwfHx8fDE3NTk3MzQ2NTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "music studio"
+    },
+    {
+      "id": "singer-guitar",
+      "description": "Cantante tocando la guitarra en un escenario.",
+      "imageUrl": "https://images.unsplash.com/photo-1707109655777-c04056f2edef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzaW5nZXIlMjBndWl0YXJ8ZW58MHx8fHwxNzU5NzgyNzk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "singer guitar"
+    },
+    {
+      "id": "remote-work",
+      "description": "Persona trabajando remotamente en una laptop.",
+      "imageUrl": "https://images.unsplash.com/photo-1530977875151-aae9742fde19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxyZW1vdGUlMjB3b3JrfGVufDB8fHx8MTc1OTc1Nzk4NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "remote work"
+    },
+    {
+      "id": "dj-mixer",
+      "description": "DJ usando una mezcladora en un concierto.",
+      "imageUrl": "https://images.unsplash.com/photo-1621175585888-2ec525798327?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkaiUyMG1peGVyfGVufDB8fHx8MTc1OTc4Mjc5NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "dj mixer"
     }
   ]
 }

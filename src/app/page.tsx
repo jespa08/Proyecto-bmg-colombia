@@ -10,19 +10,23 @@ import { Footer } from '@/components/landing/footer';
 import { TestimonialSection } from '@/components/landing/testimonial-section';
 import { AnimatedSection } from '@/components/landing/animated-section';
 import { CreditCardSection } from '@/components/landing/credit-card-section';
+import { CorporateMissionSection } from '@/components/landing/corporate-mission-section';
 
 export default function Home() {
   return (
     <div className="flex min-h-dvh flex-col bg-background">
       <main className="flex-1">
         <HeroSection />
-        <AnimatedSection id="about" className="py-16 md:py-24 lg:py-32" showWaves showZigzag>
+        <AnimatedSection id="about" className="py-16 md:py-24 lg:py-32" showWaves>
           <AboutSection />
+        </AnimatedSection>
+        <AnimatedSection id="mission" className="bg-dark-blue text-white py-16 md:py-24 lg:py-32" showNotes showWaves>
+          <CorporateMissionSection />
         </AnimatedSection>
         <AnimatedSection id="project" className="bg-dark-blue text-white py-16 md:py-24 lg:py-32" showNotes showWaves>
           <ProjectSection />
         </AnimatedSection>
-        <AnimatedSection id="revenue-model" className="py-16 md:py-24 lg:py-32 bg-background text-foreground" showWaves showZigzag>
+        <AnimatedSection id="revenue-model" className="py-16 md:py-24 lg:py-32 bg-background text-foreground" showWaves>
           <RevenueModelSection />
         </AnimatedSection>
         <AnimatedSection id="earnings" className="bg-dark-blue text-white py-16 md:py-24 lg:py-32" showNotes showWaves>
@@ -31,10 +35,10 @@ export default function Home() {
         <AnimatedSection id="credit-card" className="py-16 md:py-24 lg:py-32" showWaves>
           <CreditCardSection />
         </AnimatedSection>
-        <AnimatedSection id="opportunities" className="bg-muted py-16 md:py-24 lg:py-32" showWaves showZigzag>
+        <AnimatedSection id="opportunities" className="bg-muted py-16 md:py-24 lg:py-32" showWaves>
           <OpportunitiesSection />
         </AnimatedSection>
-        <AnimatedSection id="social" className="py-16 md:py-24 lg:py-32" showWaves showZigzag>
+        <AnimatedSection id="social" className="py-16 md:py-24 lg:py-32" showWaves>
           <SocialResponsibilitySection />
         </AnimatedSection>
         <AnimatedSection id="testimonial" className="py-16 md:py-24 lg:py-32" showWaves>

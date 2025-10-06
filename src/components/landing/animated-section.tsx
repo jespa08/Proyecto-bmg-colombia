@@ -3,9 +3,8 @@
 import { motion } from "framer-motion";
 import { Music2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { WaveAnimation } from "./wave-animation";
-import { Zigzag } from "./zigzag";
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
@@ -13,7 +12,6 @@ interface AnimatedSectionProps {
   showNotes?: boolean;
   id?: string;
   showWaves?: boolean;
-  showZigzag?: boolean;
 }
 
 interface NoteStyle {
@@ -24,7 +22,7 @@ interface NoteStyle {
   duration: number;
 }
 
-export function AnimatedSection({ children, className, showNotes = false, id, showWaves = false, showZigzag = false }: AnimatedSectionProps) {
+export function AnimatedSection({ children, className, showNotes = false, id, showWaves = false }: AnimatedSectionProps) {
   const [noteStyles, setNoteStyles] = useState<NoteStyle[]>([]);
 
   useEffect(() => {
@@ -65,12 +63,6 @@ export function AnimatedSection({ children, className, showNotes = false, id, sh
       transition={{ duration: 0.5 }}
     >
       {showWaves && <WaveAnimation />}
-      {showZigzag && (
-        <>
-          <Zigzag className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 rotate-45 text-primary/10" />
-          <Zigzag className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 rotate-45 text-primary/10" />
-        </>
-      )}
       {showNotes && (
         <div className="absolute inset-0 z-0 pointer-events-none">
           {noteStyles.map((style, i) => (
