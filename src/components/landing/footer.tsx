@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Instagram, Facebook, Globe } from "lucide-react";
+import { Instagram, Facebook, Globe, Youtube } from "lucide-react";
 
 export function Footer() {
   return (
@@ -28,6 +28,15 @@ export function Footer() {
               className="transition-colors hover:text-white"
             >
               <Facebook className="h-5 w-5" />
+            </Link>
+            <Link
+              href="https://www.youtube.com/bmg"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+              className="transition-colors hover:text-white"
+            >
+              <Youtube className="h-5 w-5" />
             </Link>
             <Link
               href="https://www.bmg.com/"
