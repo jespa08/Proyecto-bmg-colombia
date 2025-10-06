@@ -9,6 +9,7 @@ import { CtaSection } from '@/components/landing/cta-section';
 import { Footer } from '@/components/landing/footer';
 import { TestimonialSection } from '@/components/landing/testimonial-section';
 import { AnimatedSection } from '@/components/landing/animated-section';
+import { CreditCardSection } from '@/components/landing/credit-card-section';
 
 export default function Home() {
   return (
@@ -26,6 +27,9 @@ export default function Home() {
         </AnimatedSection>
         <AnimatedSection id="earnings" className="bg-dark-blue text-white py-16 md:py-24 lg:py-32" showNotes showWaves>
           <EarningsSection />
+        </AnimatedSection>
+        <AnimatedSection id="credit-card" className="py-16 md:py-24 lg:py-32" showWaves>
+          <CreditCardSection />
         </AnimatedSection>
         <AnimatedSection id="opportunities" className="bg-muted py-16 md:py-24 lg:py-32" showWaves showZigzag>
           <OpportunitiesSection />
