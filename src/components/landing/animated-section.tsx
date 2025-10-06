@@ -76,7 +76,7 @@ export function AnimatedSection({ children, className, showNotes = false, id, sh
           {noteStyles.map((style, i) => (
             <motion.div
               key={i}
-              className="absolute text-blue-500/20"
+              className="absolute text-blue-500/50"
               style={{
                 left: style.left,
                 top: style.top,
