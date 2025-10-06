@@ -1,4 +1,4 @@
-import { CreditCard } from "lucide-react";
+import { AlertCircle, CreditCard } from "lucide-react";
 
 export function CreditCardSection() {
   return (
@@ -16,6 +16,12 @@ export function CreditCardSection() {
         <p className="mt-4 text-muted-foreground md:text-lg/relaxed">
           Los nuevos empleados pueden solicitar la tarjeta de crédito BMG para <strong className="text-primary">retirar por adelantado el depósito laboral pagado</strong> a su cuenta de Nequi, y posteriormente <strong className="text-primary">reembolsar el monto de la tarjeta en cuotas</strong> con el salario que generen diariamente al reproducir música en la plataforma BMG. El proceso de revisión tarda de 1 a 15 días hábiles. Tras la aprobación, el importe del depósito se abonará directamente en la cuenta BMG del empleado registrada en la plataforma, lo que garantiza un pago seguro y rápido.
         </p>
+        <div className="mt-6 inline-flex items-center rounded-lg bg-yellow-100/80 p-3 text-sm font-semibold text-yellow-900 shadow-md dark:bg-yellow-900/40 dark:text-yellow-100">
+            <AlertCircle className="mr-2 h-5 w-5" />
+            <div>
+              <strong>Atención:</strong> Solo los nuevos empleados con nivel <strong className="font-bold">A3 o B1 en adelante</strong> pueden solicitar la tarjeta de crédito.
+            </div>
+        </div>
       </div>
     </div>
   );
