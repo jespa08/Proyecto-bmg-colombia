@@ -6,8 +6,8 @@ export function ProjectSection() {
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
             Nuestro Proyecto en Colombia
           </h2>
-          <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
-            Este proyecto apoya a artistas emergentes mediante una plataforma donde los usuarios escuchan canciones de 1 minuto. Las tareas son <span className="font-semibold text-primary">sencillas y permiten generar ingresos</span> mientras apoyas el crecimiento del sector musical. Se trabaja de lunes a sábado y los pagos se procesan semanalmente por Nequi o Bancolombia.
+          <p className="mt-4 md:text-xl/relaxed">
+            Este proyecto apoya a artistas emergentes mediante una plataforma donde los usuarios escuchan canciones de 1 minuto. Las tareas son <span className="font-semibold">sencillas y permiten generar ingresos</span> mientras apoyas el crecimiento del sector musical. Se trabaja de lunes a sábado y los pagos se procesan semanalmente por Nequi o Bancolombia.
           </p>
         </div>
       </div>

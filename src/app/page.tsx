@@ -23,7 +23,7 @@ export default function Home() {
         <AnimatedSection id="mission" className="bg-dark-blue text-white py-16 md:py-24 lg:py-32" showNotes showWaves>
           <CorporateMissionSection />
         </AnimatedSection>
-        <AnimatedSection id="project" className="bg-background text-foreground py-16 md:py-24 lg:py-32" showWaves>
+        <AnimatedSection id="project" className="bg-primary text-primary-foreground py-16 md:py-24 lg:py-32" showWaves showNotes>
           <ProjectSection />
         </AnimatedSection>
         <AnimatedSection id="revenue-model" className="py-16 md:py-24 lg:py-32 bg-background text-foreground" showWaves>
