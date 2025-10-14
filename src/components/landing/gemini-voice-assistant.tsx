@@ -14,9 +14,14 @@ interface Message {
   content: string;
 }
 
+const initialMessage: Message = {
+  role: 'model',
+  content: 'Hola, soy el Asistente de Información de BMG. ¿En qué puedo ayudarte hoy?',
+};
+
 export function GeminiVoiceAssistant() {
   const [query, setQuery] = useState('');
-  const [history, setHistory] = useState<Message[]>([]);
+  const [history, setHistory] = useState<Message[]>([initialMessage]);
   const [isLoading, setIsLoading] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -115,11 +120,18 @@ export function GeminiVoiceAssistant() {
     e.preventDefault();
     handleSubmit(query);
   };
+  
+  const handleOpenChat = () => {
+    setIsChatOpen(true);
+    if (history.length === 0) {
+      setHistory([initialMessage]);
+    }
+  }
 
   return (
     <>
       <button
-        onClick={() => setIsChatOpen(true)}
+        onClick={handleOpenChat}
         className="fixed bottom-4 right-24 z-[1001] flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-primary text-primary-foreground shadow-2xl transition-transform hover:scale-110 hover:bg-primary/90"
         title="Asistente de Información"
       >
