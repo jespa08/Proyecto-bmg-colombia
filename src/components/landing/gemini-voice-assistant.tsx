@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { askWithVoice } from '@/ai/flows/gemini-voice-agent';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,12 @@ export function GeminiVoiceAssistant() {
   const [response, setResponse] = useState<{ text: string; audio: string } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (response?.audio && audioRef.current) {
+      audioRef.current.src = response.audio;
+    }
+  }, [response]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +42,7 @@ export function GeminiVoiceAssistant() {
 
   const playAudio = () => {
     if (audioRef.current) {
-      audioRef.current.play();
+      audioRef.current.play().catch(e => console.error("Error playing audio:", e));
     }
   };
 
@@ -66,7 +72,7 @@ export function GeminiVoiceAssistant() {
             <p className="mb-2">{response.text}</p>
             {response.audio && (
               <>
-                <Button onClick={playAudio} size="sm" variant="outline">
+                <Button onClick={playAudio} size="sm" variant="outline" disabled={isLoading}>
                   <Play className="mr-2" />
                   Reproducir Audio
                 </Button>
