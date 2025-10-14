@@ -11,7 +11,6 @@ import { TestimonialSection } from '@/components/landing/testimonial-section';
 import { AnimatedSection } from '@/components/landing/animated-section';
 import { CreditCardSection } from '@/components/landing/credit-card-section';
 import { CorporateMissionSection } from '@/components/landing/corporate-mission-section';
-import { AgataAssistant } from '@/components/landing/agata-assistant';
 import { GeminiVoiceAssistant } from '@/components/landing/gemini-voice-assistant';
 import { NewsSection } from '@/components/landing/news-section';
 
@@ -53,7 +52,6 @@ export default function Home() {
         <CtaSection />
       </main>
       <Footer />
-      <AgataAssistant />
       <GeminiVoiceAssistant />
     </div>
   );
