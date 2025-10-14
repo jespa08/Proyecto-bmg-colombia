@@ -9,7 +9,6 @@ import { ai } from '@/ai/genkit';
 import { googleAI } from '@genkit-ai/google-genai';
 import { z } from 'zod';
 import wav from 'wav';
-import { type Part } from 'genkit';
 
 // Define the schema for a single message in the conversation
 const MessageSchema = z.object({
@@ -156,6 +155,7 @@ const voiceAgentFlow = ai.defineFlow(
 
     // 1. Generate text response first.
     const textResult = await ai.generate({
+      model: googleAI.model('gemini-1.5-flash'),
       prompt: query,
       history: aiHistory,
       system: systemPrompt,
