@@ -148,14 +148,14 @@ const voiceAgentFlow = ai.defineFlow(
   },
   async ({ history, query }) => {
     // Construct the history for the AI model, ensuring the correct format.
-    const aiHistory = history.map(msg => ({
+    const aiHistory = history.map((msg) => ({
       role: msg.role,
       content: [{ text: msg.content }],
     }));
 
     // 1. Generate text response first.
     const textResult = await ai.generate({
-      model: googleAI.model('gemini-1.5-flash'),
+      model: googleAI.model('gemini-1.5-pro'),
       prompt: query,
       history: aiHistory,
       system: systemPrompt,
@@ -166,7 +166,7 @@ const voiceAgentFlow = ai.defineFlow(
 
     // Prepare a version of the text for pronunciation.
     const pronunciationText = cleanText.replace(/BMG/g, 'Bi Em Yi');
-    
+
     try {
       // 2. Generate audio from the generated text response.
       const audioResult = await ai.generate({
@@ -191,7 +191,7 @@ const voiceAgentFlow = ai.defineFlow(
           'base64'
         );
         const wavData = await toWav(pcmData);
-  
+
         // 4. Return both the original text and the base64 encoded WAV audio.
         return {
           text: cleanText,
@@ -212,7 +212,9 @@ const voiceAgentFlow = ai.defineFlow(
  * @param input The conversation history and the new query.
  * @returns An object containing the text response and base64 audio data.
  */
-export async function askWithVoice(input: ConversationInput): Promise<VoiceOutput> {
+export async function askWithVoice(
+  input: ConversationInput
+): Promise<VoiceOutput> {
   return voiceAgentFlow(input);
 }
 
