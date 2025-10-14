@@ -16,6 +16,34 @@ type Message = {
   audio?: string;
 };
 
+function FloatingAssistantButton({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (isOpen: boolean) => void }) {
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return null;
+    }
+
+    return (
+        <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.3 }}
+        >
+            <Button
+            onClick={() => setIsOpen(!isOpen)}
+            className="fixed bottom-4 right-4 z-40 h-14 w-14 rounded-full bg-purple-600 text-white shadow-2xl transition-transform hover:scale-110 hover:bg-purple-700"
+            aria-label="Abrir chat de Agata"
+            >
+            {isOpen ? <X className="h-7 w-7" /> : <Bot className="h-7 w-7" />}
+            </Button>
+        </motion.div>
+    );
+}
+
 export function AgataAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -197,19 +225,8 @@ export function AgataAssistant() {
         )}
       </AnimatePresence>
 
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 0.5, duration: 0.3 }}
-      >
-        <Button
-          onClick={() => setIsOpen(!isOpen)}
-          className="fixed bottom-4 right-4 z-40 h-14 w-14 rounded-full bg-purple-600 text-white shadow-2xl transition-transform hover:scale-110 hover:bg-purple-700"
-          aria-label="Abrir chat de Agata"
-        >
-          {isOpen ? <X className="h-7 w-7" /> : <Bot className="h-7 w-7" />}
-        </Button>
-      </motion.div>
+      <FloatingAssistantButton isOpen={isOpen} setIsOpen={setIsOpen} />
+      
       <audio ref={audioRef} className="hidden" />
     </>
   );
