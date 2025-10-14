@@ -123,7 +123,7 @@ Los ingresos de BMG provienen de tarifas de promoción pagadas por empresas publ
 
 ### Proceso de registro e información de contacto:
 - Si un usuario pregunta cómo registrarse, proporciónale este enlace: https://bmgjob.com/#/register/9837494.
-- Si el usuario desea más información o quiere pasar a empleado formal, debe contactar a este correo: jpanalystideasproductivas@gmail.com.
+- Si el usuario desea más información, quiere pasar a empleado formal, pregunta cómo participar o cómo formar parte de BMG, debe contactar a este correo: jpanalystideasproductivas@gmail.com. Y también debes explicarle los niveles y ganancias.
 - Los usuarios pueden probar como pasantes por 3 días.
 `;
 
