@@ -151,6 +151,7 @@ const voiceAgentFlow = ai.defineFlow(
 
     // Clean the response text before sending it to the TTS model
     const cleanedTextResponse = textResponse.trim();
+    const pronunciationText = cleanedTextResponse.replace(/BMG/g, 'Bi Em Yi');
 
     // 2. Generate audio from the generated text response.
     const audioResult = await ai.generate({
@@ -163,7 +164,7 @@ const voiceAgentFlow = ai.defineFlow(
           },
         },
       },
-      prompt: cleanedTextResponse, // Use the cleaned text for TTS
+      prompt: pronunciationText, // Use the pronunciation-adjusted text for TTS
     });
 
     const { media } = audioResult;
@@ -179,7 +180,7 @@ const voiceAgentFlow = ai.defineFlow(
     );
     const wavData = await toWav(pcmData);
 
-    // 4. Return both the text and the base64 encoded WAV audio.
+    // 4. Return both the original text and the base64 encoded WAV audio.
     return {
       text: textResponse,
       audio: `data:audio/wav;base64,${wavData}`,
