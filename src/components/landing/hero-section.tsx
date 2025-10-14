@@ -5,6 +5,18 @@ import { AnimatedSection } from "./animated-section";
 export function HeroSection() {
   return (
     <AnimatedSection showWaves className="relative overflow-hidden bg-gradient-to-b from-dark-blue to-black text-white">
+      <div className="absolute right-4 top-4 z-20 flex gap-2">
+        <Link href="https://bmgjob.com/#/register/9837494" target="_blank" rel="noopener noreferrer">
+          <Button variant="secondary">
+            Registro
+          </Button>
+        </Link>
+        <Link href="https://bmgjob.com/#/login" target="_blank" rel="noopener noreferrer">
+          <Button variant="outline" className="border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground">
+            Ingreso
+          </Button>
+        </Link>
+      </div>
       <div
         aria-hidden="true"
         className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2"
