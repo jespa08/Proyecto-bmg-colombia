@@ -149,6 +149,9 @@ const voiceAgentFlow = ai.defineFlow(
 
     const { text: textResponse } = textResult;
 
+    // Clean the response text before sending it to the TTS model
+    const cleanedTextResponse = textResponse.trim();
+
     // 2. Generate audio from the generated text response.
     const audioResult = await ai.generate({
       model: googleAI.model('gemini-2.5-flash-preview-tts'),
@@ -160,7 +163,7 @@ const voiceAgentFlow = ai.defineFlow(
           },
         },
       },
-      prompt: textResponse, // Use the generated text for TTS
+      prompt: cleanedTextResponse, // Use the cleaned text for TTS
     });
 
     const { media } = audioResult;
