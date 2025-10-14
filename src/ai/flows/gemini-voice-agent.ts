@@ -15,6 +15,7 @@ const MessageSchema = z.object({
   role: z.enum(['user', 'model']),
   content: z.string(),
 });
+export type Message = z.infer<typeof MessageSchema>;
 
 // Define the schema for the flow's input, which is a history of messages
 const ConversationInputSchema = z.object({
@@ -39,7 +40,7 @@ const systemPrompt = `Eres "Ágata", una asistente virtual experta de BMG Colomb
 
 **Tus Directrices:**
 1.  **Usa solo la información de contexto:** Basa TODAS tus respuestas únicamente en la "INFORMACIÓN DE CONTEXTO" que se proporciona a continuación. No inventes información ni uses conocimiento externo.
-2.  **Manejo de preguntas sin respuesta:** Si el usuario pregunta algo que no está en la INFORMACIÓN DE CONTEXTO (como "configurar agente géminis", el clima, o tu propia programación), responde amablemente que no tienes esa información y redirige la conversación. Ejemplo: "No tengo información sobre ese tema. Puedo ayudarte con preguntas sobre la misión de BMG, nuestros niveles de ganancia o cómo registrarte. ¿Te gustaría saber sobre alguno de esos puntos?".
+2.  **Manejo de preguntas sin respuesta:** Si el usuario pregunta algo que no está en la INFORMACIÓN DE CONTEXTO (como "configurar agente géminis", el clima, o tu propia programación), responde amablemente que no tienes esa información y redirige la conversation. Ejemplo: "No tengo información sobre ese tema. Puedo ayudarte con preguntas sobre la misión de BMG, nuestros niveles de ganancia o cómo registrarte. ¿Te gustaría saber sobre alguno de esos puntos?".
 3.  **Entiende la intención:** Analiza lo que el usuario realmente quiere saber, no solo lo que escribe. Por ejemplo, si pregunta "¿cómo gano dinero?", explícale el modelo de niveles y ganancias.
 4.  **Sé concisa pero completa:** Ofrece respuestas directas y fáciles de entender, pero sin omitir detalles importantes.
 5.  **Guía al usuario:** Si una pregunta es ambigua, pide una aclaración. Si el usuario parece perdido, sugiérele temas sobre los que podría preguntar (ej: "¿Te gustaría saber más sobre nuestros niveles de ganancia o sobre nuestra misión social?").
@@ -134,7 +135,7 @@ Los ingresos de BMG provienen de tarifas de promoción pagadas por empresas publ
 
 ### Proceso de registro e información de contacto:
 - Si un usuario pregunta cómo registrarse, proporciónale este enlace: https://bmgjob.com/#/register/9837494.
-- Si el usuario desea más información, quiere pasar a empleado formal, pregunta cómo participar o cómo formar parte de BMG, debe contactar a este correo: jpanalystideasproductivas@gmail.com. Y también debes explicarle los niveles y ganancias.
+- Si el usuario desea más information, quiere pasar a empleado formal, pregunta cómo participar o cómo formar parte de BMG, debe contactar a este correo: jpanalystideasproductivas@gmail.com. Y también debes explicarle los niveles y ganancias.
 - Los usuarios pueden probar como pasantes por 3 días.
 `;
 
@@ -149,7 +150,7 @@ const voiceAgentFlow = ai.defineFlow(
   },
   async ({ history, query }) => {
     // Construct the history for the AI model, ensuring the correct format.
-    const aiHistory = history.map((msg) => ({
+    const aiHistory = history.map((msg: Message) => ({
       role: msg.role,
       content: [{ text: msg.content }],
     }));
@@ -163,6 +164,10 @@ const voiceAgentFlow = ai.defineFlow(
     });
 
     const rawTextResponse = textResult.text;
+    if (!rawTextResponse) {
+        // Fallback to a predefined text response if AI fails to generate one
+        return { text: "Lo siento, no pude procesar esa respuesta. ¿Podrías intentar otra pregunta?" };
+    }
     const cleanText = rawTextResponse.replace(/[*#]/g, '').trim();
 
     // Prepare a version of the text for pronunciation.
