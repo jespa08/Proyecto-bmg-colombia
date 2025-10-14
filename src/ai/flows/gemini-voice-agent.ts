@@ -27,7 +27,7 @@ export type ConversationInput = z.infer<typeof ConversationInputSchema>;
 // Define the schema for the flow's output
 const VoiceOutputSchema = z.object({
   text: z.string().describe('The text response from the AI.'),
-  audio: z.string().describe('The base64 encoded WAV audio data.'),
+  audio: z.string().optional().describe('The base64 encoded WAV audio data.'),
 });
 export type VoiceOutput = z.infer<typeof VoiceOutputSchema>;
 
@@ -148,43 +148,48 @@ const voiceAgentFlow = ai.defineFlow(
     });
 
     const { text: textResponse } = textResult;
-
-    // Clean the response text before sending it to the TTS model
     const cleanedTextResponse = textResponse.trim();
     const pronunciationText = cleanedTextResponse.replace(/BMG/g, 'Bi Em Yi');
-
-    // 2. Generate audio from the generated text response.
-    const audioResult = await ai.generate({
-      model: googleAI.model('gemini-2.5-flash-preview-tts'),
-      config: {
-        responseModalities: ['AUDIO'],
-        speechConfig: {
-          voiceConfig: {
-            prebuiltVoiceConfig: { voiceName: 'Algenib' },
+    
+    try {
+      // 2. Generate audio from the generated text response.
+      const audioResult = await ai.generate({
+        model: googleAI.model('gemini-2.5-flash-preview-tts'),
+        config: {
+          responseModalities: ['AUDIO'],
+          speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: { voiceName: 'Algenib' },
+            },
           },
         },
-      },
-      prompt: pronunciationText, // Use the pronunciation-adjusted text for TTS
-    });
+        prompt: pronunciationText, // Use the pronunciation-adjusted text for TTS
+      });
 
-    const { media } = audioResult;
+      const { media } = audioResult;
 
-    if (!media || !media.url) {
-      throw new Error('Audio generation failed: no media returned.');
+      if (!media || !media.url) {
+        // If audio generation fails but we don't have an error, return text only.
+        return { text: textResponse };
+      }
+
+      // 3. Convert the raw PCM audio data to WAV format.
+      const pcmData = Buffer.from(
+        media.url.substring(media.url.indexOf(',') + 1),
+        'base64'
+      );
+      const wavData = await toWav(pcmData);
+
+      // 4. Return both the original text and the base64 encoded WAV audio.
+      return {
+        text: textResponse,
+        audio: `data:audio/wav;base64,${wavData}`,
+      };
+    } catch (error) {
+        console.error("Audio generation failed, returning text only.", error);
+        // If there's any error during audio generation, just return the text.
+        return { text: textResponse };
     }
-
-    // 3. Convert the raw PCM audio data to WAV format.
-    const pcmData = Buffer.from(
-      media.url.substring(media.url.indexOf(',') + 1),
-      'base64'
-    );
-    const wavData = await toWav(pcmData);
-
-    // 4. Return both the original text and the base64 encoded WAV audio.
-    return {
-      text: textResponse,
-      audio: `data:audio/wav;base64,${wavData}`,
-    };
   }
 );
 
