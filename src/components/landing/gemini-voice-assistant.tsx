@@ -1,51 +1,119 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { askWithVoice } from '@/ai/flows/gemini-voice-agent';
+import { askWithVoice, type ConversationInput } from '@/ai/flows/gemini-voice-agent';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, Play, Mic, X } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardFooter, CardTitle } from '@/components/ui/card';
+import { Loader2, Send, Mic, X, Bot, User } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ScrollArea } from '@/components/ui/scroll-area';
+
+interface Message {
+  role: 'user' | 'model';
+  content: string;
+}
 
 export function GeminiVoiceAssistant() {
   const [query, setQuery] = useState('');
-  const [response, setResponse] = useState<{ text: string; audio: string } | null>(null);
+  const [history, setHistory] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   useEffect(() => {
-    if (response?.audio && audioRef.current) {
-      audioRef.current.src = response.audio;
+    // Scroll to bottom when new messages are added
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTo({ top: scrollAreaRef.current.scrollHeight, behavior: 'smooth' });
     }
-  }, [response]);
+  }, [history]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query.trim()) return;
+  useEffect(() => {
+    // Initialize SpeechRecognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.lang = 'es-ES';
+      recognition.interimResults = false;
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setQuery(transcript);
+        stopListening();
+        // Automatically submit the transcript
+        handleSubmit(transcript);
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        stopListening();
+      };
+      
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+    }
+  }, []);
+
+  const startListening = () => {
+    if (recognitionRef.current && !isListening) {
+      setQuery('');
+      setIsListening(true);
+      recognitionRef.current.start();
+    }
+  };
+
+  const stopListening = () => {
+    if (recognitionRef.current && isListening) {
+      setIsListening(false);
+      recognitionRef.current.stop();
+    }
+  };
+
+  const handleSubmit = async (currentQuery: string) => {
+    if (!currentQuery.trim()) return;
 
     setIsLoading(true);
-    setResponse(null);
+    const newUserMessage: Message = { role: 'user', content: currentQuery };
+    setHistory(prev => [...prev, newUserMessage]);
+    setQuery('');
 
     try {
-      const result = await askWithVoice({ query });
-      setResponse(result);
+      const conversationInput: ConversationInput = {
+        history: history,
+        query: currentQuery,
+      };
+      const result = await askWithVoice(conversationInput);
+      
+      const newAssistantMessage: Message = { role: 'model', content: result.text };
+      setHistory(prev => [...prev, newAssistantMessage]);
+
+      if (audioRef.current && result.audio) {
+        audioRef.current.src = result.audio;
+        audioRef.current.play().catch(e => console.error("Error playing audio:", e));
+      }
     } catch (error) {
       console.error('Error getting response from voice agent:', error);
-      setResponse({
-        text: 'Lo siento, ha ocurrido un error al procesar tu solicitud.',
-        audio: '',
-      });
+      const errorMessage: Message = {
+        role: 'model',
+        content: 'Lo siento, ha ocurrido un error al procesar tu solicitud.',
+      };
+      setHistory(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const playAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.play().catch(e => console.error("Error playing audio:", e));
-    }
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSubmit(query);
   };
 
   return (
@@ -67,45 +135,56 @@ export function GeminiVoiceAssistant() {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="fixed bottom-24 right-5 z-[1000] w-full max-w-md"
           >
-            <Card>
+            <Card className="flex h-[60vh] flex-col">
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Asistente de Voz</CardTitle>
                 <Button variant="ghost" size="icon" onClick={() => setIsChatOpen(false)}>
                   <X className="h-4 w-4" />
                 </Button>
               </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="flex items-center gap-2 mb-4">
+              <CardContent className="flex-1 overflow-hidden">
+                <ScrollArea className="h-full" ref={scrollAreaRef}>
+                  <div className="space-y-4 pr-4">
+                    {history.map((msg, index) => (
+                      <div key={index} className={`flex items-start gap-3 ${msg.role === 'user' ? 'justify-end' : ''}`}>
+                        {msg.role === 'model' && <Bot className="h-6 w-6 shrink-0 text-primary" />}
+                        <div className={`rounded-lg px-3 py-2 ${msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
+                          <p className="text-sm">{msg.content}</p>
+                        </div>
+                        {msg.role === 'user' && <User className="h-6 w-6 shrink-0" />}
+                      </div>
+                    ))}
+                    {isLoading && (
+                       <div className="flex items-start gap-3">
+                         <Bot className="h-6 w-6 shrink-0 text-primary" />
+                         <div className="rounded-lg px-3 py-2 bg-muted">
+                           <Loader2 className="h-5 w-5 animate-spin" />
+                         </div>
+                       </div>
+                    )}
+                  </div>
+                </ScrollArea>
+              </CardContent>
+              <CardFooter>
+                <form onSubmit={handleFormSubmit} className="flex w-full items-center gap-2">
                   <Input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Escribe tu pregunta aquí..."
-                    disabled={isLoading}
+                    placeholder={isListening ? "Escuchando..." : "Escribe o presiona el micrófono..."}
+                    disabled={isLoading || isListening}
                     className="flex-grow"
                   />
-                  <Button type="submit" disabled={isLoading}>
-                    {isLoading ? <Loader2 className="animate-spin" /> : 'Preguntar'}
+                  <Button type="button" size="icon" variant={isListening ? "destructive" : "outline"} onClick={isListening ? stopListening : startListening} disabled={isLoading}>
+                    <Mic className="h-5 w-5" />
+                  </Button>
+                  <Button type="submit" size="icon" disabled={isLoading || !query.trim()}>
+                    {isLoading ? <Loader2 className="animate-spin" /> : <Send />}
                   </Button>
                 </form>
-
-                {response && (
-                  <div className="p-4 bg-muted rounded-lg">
-                    <p className="font-semibold">Respuesta:</p>
-                    <p className="mb-2">{response.text}</p>
-                    {response.audio && (
-                      <>
-                        <Button onClick={playAudio} size="sm" variant="outline" disabled={isLoading}>
-                          <Play className="mr-2" />
-                          Reproducir Audio
-                        </Button>
-                        <audio ref={audioRef} src={response.audio} className="hidden" />
-                      </>
-                    )}
-                  </div>
-                )}
-              </CardContent>
+              </CardFooter>
             </Card>
+            <audio ref={audioRef} className="hidden" />
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,8 +1,8 @@
 'use server';
 /**
- * @fileOverview A simple voice agent that responds to text queries with generated audio.
+ * @fileOverview A conversational voice agent that responds to text queries with generated audio, maintaining conversation history.
  *
- * - askWithVoice - A function that takes a text query and returns a text and audio response.
+ * - askWithVoice - A function that takes a conversation history and returns a text and audio response.
  */
 
 import { ai } from '@/ai/genkit';
@@ -11,11 +11,18 @@ import { z } from 'zod';
 import wav from 'wav';
 import { Readable } from 'stream';
 
-// Define the schema for the flow's input
-const TextInputSchema = z.object({
+// Define the schema for a single message in the conversation
+const MessageSchema = z.object({
+  role: z.enum(['user', 'model']),
+  content: z.string(),
+});
+
+// Define the schema for the flow's input, which is a history of messages
+const ConversationInputSchema = z.object({
+  history: z.array(MessageSchema),
   query: z.string(),
 });
-export type TextInput = z.infer<typeof TextInputSchema>;
+export type ConversationInput = z.infer<typeof ConversationInputSchema>;
 
 // Define the schema for the flow's output
 const VoiceOutputSchema = z.object({
@@ -25,18 +32,20 @@ const VoiceOutputSchema = z.object({
 export type VoiceOutput = z.infer<typeof VoiceOutputSchema>;
 
 /**
- * A flow that generates a text response and then converts it to speech.
+ * A flow that generates a text response based on conversation history and then converts it to speech.
  */
 const voiceAgentFlow = ai.defineFlow(
   {
     name: 'voiceAgentFlow',
-    inputSchema: TextInputSchema,
+    inputSchema: ConversationInputSchema,
     outputSchema: VoiceOutputSchema,
   },
-  async ({ query }) => {
-    // 1. Generate a text response from the query.
+  async ({ history, query }) => {
+    // 1. Generate a text response from the conversation history and the new query.
     const { text: textResponse } = await ai.generate({
-      prompt: `You are a helpful assistant. Respond to the following query in a concise and friendly manner: ${query}`,
+      prompt: `You are a helpful assistant. Respond to the following query in a concise and friendly manner, keeping in mind the previous conversation.`,
+      history: history.map(m => ({ role: m.role, content: [{ text: m.content }] })),
+      messages: [{ role: 'user', content: [{ text: query }] }],
     });
 
     // 2. Generate audio from the text response.
@@ -74,10 +83,10 @@ const voiceAgentFlow = ai.defineFlow(
 
 /**
  * Wrapper function to be called from the client-side.
- * @param input The text query.
+ * @param input The conversation history and the new query.
  * @returns An object containing the text response and base64 audio data.
  */
-export async function askWithVoice(input: TextInput): Promise<VoiceOutput> {
+export async function askWithVoice(input: ConversationInput): Promise<VoiceOutput> {
   return voiceAgentFlow(input);
 }
 
