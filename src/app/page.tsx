@@ -46,13 +46,11 @@ export default function Home() {
         <AnimatedSection id="testimonial" className="py-16 md:py-24 lg:py-32" showWaves showZigzag>
           <TestimonialSection />
         </AnimatedSection>
-        <div className="container mx-auto px-4 md:px-6 my-12">
-            <GeminiVoiceAssistant />
-        </div>
         <CtaSection />
       </main>
       <Footer />
       <AgataAssistant />
+      <GeminiVoiceAssistant />
     </div>
   );
 }
