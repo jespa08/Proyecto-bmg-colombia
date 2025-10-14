@@ -12,6 +12,7 @@ import { AnimatedSection } from '@/components/landing/animated-section';
 import { CreditCardSection } from '@/components/landing/credit-card-section';
 import { CorporateMissionSection } from '@/components/landing/corporate-mission-section';
 import { AgataAssistant } from '@/components/landing/agata-assistant';
+import { GeminiVoiceAssistant } from '@/components/landing/gemini-voice-assistant';
 
 export default function Home() {
   return (
@@ -45,6 +46,9 @@ export default function Home() {
         <AnimatedSection id="testimonial" className="py-16 md:py-24 lg:py-32" showWaves showZigzag>
           <TestimonialSection />
         </AnimatedSection>
+        <div className="container mx-auto px-4 md:px-6 my-12">
+            <GeminiVoiceAssistant />
+        </div>
         <CtaSection />
       </main>
       <Footer />
