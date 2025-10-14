@@ -132,7 +132,7 @@ export function GeminiVoiceAssistant() {
     <>
       <button
         onClick={handleOpenChat}
-        className="fixed bottom-4 right-24 z-[1001] flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-primary text-primary-foreground shadow-2xl transition-transform hover:scale-110 hover:bg-primary/90"
+        className="fixed bottom-4 right-24 z-[1001] flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-orange-500 text-white shadow-2xl transition-transform hover:scale-110 hover:bg-orange-600"
         title="Asistente de Información"
       >
         <Mic className="h-8 w-8" />
