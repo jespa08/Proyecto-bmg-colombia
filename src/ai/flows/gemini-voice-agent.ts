@@ -239,6 +239,7 @@ async function toWav(
     writer.on('end', () => resolve(Buffer.concat(chunks).toString('base64')));
     writer.on('error', reject);
 
-    writer.end(pcmData);
+    writer.write(pcmData);
+    writer.end();
   });
 }
