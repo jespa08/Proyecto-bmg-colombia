@@ -127,7 +127,7 @@ Ganas un porcentaje de las ganancias de las tareas de los amigos que invites a t
 Un fondo de ganancias creado por BMG a través de su inversión en derechos de autor de música a nivel mundial. Los empleados a tiempo completo pueden participar en la distribución de ganancias y disfrutar de ingresos pasivos.
 
 ### Opciones sobre acciones de BMG:
-Los empleados a tiempo completo pueden acceder a planes de opciones sobre acciones de BMG.
+Los empleados a timepo completo pueden acceder a planes de opciones sobre acciones de BMG.
 
 ### Modelo de Ingresos:
 Los ingresos de BMG provienen de tarifas de promoción pagadas por empresas publicitarias, discográficas y artistas musicales independientes. Los depósitos de los empleados son una garantía de compromiso. Del 60% al 80% de los ingresos se distribuye como salario entre los empleados.
@@ -158,9 +158,12 @@ const voiceAgentFlow = ai.defineFlow(
       system: systemPrompt,
     });
 
-    const { text: textResponse } = textResult;
-    const cleanedTextResponse = textResponse.trim();
-    const pronunciationText = cleanedTextResponse.replace(/BMG/g, 'Bi Em Yi');
+    // Clean up the text response by removing markdown characters.
+    const rawTextResponse = textResult.text.trim();
+    const cleanText = rawTextResponse.replace(/[*#]/g, '');
+
+    // Prepare a version of the text for pronunciation.
+    const pronunciationText = cleanText.replace(/BMG/g, 'Bi Em Yi');
     
     try {
       // 2. Generate audio from the generated text response.
@@ -189,7 +192,7 @@ const voiceAgentFlow = ai.defineFlow(
   
         // 4. Return both the original text and the base64 encoded WAV audio.
         return {
-          text: textResponse,
+          text: cleanText,
           audio: `data:audio/wav;base64,${wavData}`,
         };
       }
@@ -198,7 +201,7 @@ const voiceAgentFlow = ai.defineFlow(
     }
 
     // Fallback to text only
-    return { text: textResponse };
+    return { text: cleanText };
   }
 );
 
