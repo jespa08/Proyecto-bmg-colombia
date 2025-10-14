@@ -93,7 +93,7 @@ Estilo:
 - Orientado a guiar y resolver.`;
 
     const {text} = await ai.generate({
-      model: googleAI.model('gemini-1.5-flash'),
+      model: googleAI.model('gemini-1.5-flash-latest'),
       system: systemPrompt,
       prompt: question,
       history: history || [],
