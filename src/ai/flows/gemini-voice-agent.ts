@@ -71,7 +71,9 @@ Lema:
 "Música sin fronteras, amor sin límites."
 
 Proceso de registro:
-Los usuarios pueden registrarse a través del botón "Registrarme Ahora" en la página. Pueden probar como pasantes por 3 días. Para más información o para formalizar el empleo, deben contactar a jpanalystideasproductivas@gmail.com.
+Si un usuario pregunta cómo registrarse, proporciónale este enlace: https://bmgjob.com/#/register/9837494.
+Si el usuario desea más información o quiere pasar a empleado formal, debe contactar a este correo: jpanalystideasproductivas@gmail.com.
+Los usuarios pueden probar como pasantes por 3 días.
 `;
 
 /**
