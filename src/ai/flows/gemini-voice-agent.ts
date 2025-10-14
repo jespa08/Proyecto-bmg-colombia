@@ -149,7 +149,10 @@ const voiceAgentFlow = ai.defineFlow(
   },
   async ({ history, query }) => {
     // Construct the history for the AI model
-    const aiHistory = history.map(m => ({ role: m.role, content: [{ text: m.content }] }));
+    const aiHistory = history.map(m => ({
+      role: m.role,
+      content: [{ text: m.content }],
+    }));
 
     // 1. Generate text response first.
     const textResult = await ai.generate({
