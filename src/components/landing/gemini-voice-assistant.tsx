@@ -161,7 +161,7 @@ export function GeminiVoiceAssistant() {
                       <div key={index} className={`flex items-start gap-3 ${msg.role === 'user' ? 'justify-end' : ''}`}>
                         {msg.role === 'model' && <Bot className="h-6 w-6 shrink-0 text-primary" />}
                         <div className={`rounded-lg px-3 py-2 ${msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
-                          <p className="text-sm">{msg.content}</p>
+                          <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
                         </div>
                         {msg.role === 'user' && <User className="h-6 w-6 shrink-0" />}
                       </div>
