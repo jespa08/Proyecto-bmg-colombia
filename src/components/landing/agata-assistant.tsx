@@ -39,7 +39,7 @@ export function AgataAssistant() {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="fixed bottom-24 right-5 z-[1000] rounded-2xl bg-white p-2.5 shadow-2xl"
           >
-            <elevenlabs-convai agent-id="agent_4201k7hxveqgf0zbet4c8zd1sn8a"></elevenlabs-convai>
+            <elevenlabs-convai></elevenlabs-convai>
           </motion.div>
         )}
       </AnimatePresence>
