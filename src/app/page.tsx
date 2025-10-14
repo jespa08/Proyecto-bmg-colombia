@@ -13,6 +13,7 @@ import { CreditCardSection } from '@/components/landing/credit-card-section';
 import { CorporateMissionSection } from '@/components/landing/corporate-mission-section';
 import { AgataAssistant } from '@/components/landing/agata-assistant';
 import { GeminiVoiceAssistant } from '@/components/landing/gemini-voice-assistant';
+import { NewsSection } from '@/components/landing/news-section';
 
 export default function Home() {
   return (
@@ -45,6 +46,9 @@ export default function Home() {
         </AnimatedSection>
         <AnimatedSection id="testimonial" className="py-16 md:py-24 lg:py-32" showWaves showZigzag>
           <TestimonialSection />
+        </AnimatedSection>
+        <AnimatedSection id="news" className="bg-muted py-16 md:py-24 lg:py-32" showWaves showZigzag>
+          <NewsSection />
         </AnimatedSection>
         <CtaSection />
       </main>
