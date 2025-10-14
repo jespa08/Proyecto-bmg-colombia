@@ -7,12 +7,13 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Bot, Loader, Send, User, X } from 'lucide-react';
+import { Bot, Loader, PauseCircle, PlayCircle, Send, User, X } from 'lucide-react';
 import React, { FormEvent, useRef, useState, useEffect } from 'react';
 
 type Message = {
   role: 'user' | 'model';
   content: string;
+  audio?: string;
 };
 
 export function AgataAssistant() {
@@ -21,6 +22,10 @@ export function AgataAssistant() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [activeAudio, setActiveAudio] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -30,6 +35,43 @@ export function AgataAssistant() {
       });
     }
   }, [messages]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    const onEnded = () => {
+      setIsPlaying(false);
+      setActiveAudio(null);
+    };
+
+    audio.addEventListener('play', onPlay);
+    audio.addEventListener('pause', onPause);
+    audio.addEventListener('ended', onEnded);
+
+    return () => {
+      audio.removeEventListener('play', onPlay);
+      audio.removeEventListener('pause', onPause);
+      audio.removeEventListener('ended', onEnded);
+    };
+  }, [activeAudio]);
+
+  const playAudio = (audioSrc: string) => {
+    if (audioRef.current) {
+      if (activeAudio === audioSrc && !audioRef.current.paused) {
+        audioRef.current.pause();
+      } else {
+        if (activeAudio !== audioSrc) {
+          setActiveAudio(audioSrc);
+          audioRef.current.src = audioSrc;
+        }
+        audioRef.current.play().catch(console.error);
+      }
+    }
+  };
+
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -41,8 +83,8 @@ export function AgataAssistant() {
     setInput('');
 
     try {
-      const response = await askAgata({ question: input, history: messages });
-      const modelMessage: Message = { role: 'model', content: response };
+      const { text, audio } = await askAgata({ question: input, history: messages });
+      const modelMessage: Message = { role: 'model', content: text, audio };
       setMessages((prev) => [...prev, modelMessage]);
     } catch (error) {
       console.error('Error calling Agata assistant:', error);
@@ -103,7 +145,17 @@ export function AgataAssistant() {
                                 : 'bg-primary/10 text-foreground'
                             )}
                           >
-                            {message.content}
+                            <p className="whitespace-pre-wrap">{message.content}</p>
+                            {message.audio && (
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="mt-2 h-7 w-7 text-primary"
+                                onClick={() => playAudio(message.audio!)}
+                              >
+                                {activeAudio === message.audio && isPlaying ? <PauseCircle size={20} /> : <PlayCircle size={20} />}
+                              </Button>
+                            )}
                           </div>
                            {message.role === 'user' && (
                             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
@@ -158,6 +210,7 @@ export function AgataAssistant() {
           {isOpen ? <X className="h-7 w-7" /> : <Bot className="h-7 w-7" />}
         </Button>
       </motion.div>
+      <audio ref={audioRef} className="hidden" />
     </>
   );
 }
