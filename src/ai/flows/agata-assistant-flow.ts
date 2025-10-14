@@ -1,6 +1,6 @@
 'use server';
 /**
- * @fileOverview Agata, the virtual assistant for the BMG Colombia project.
+ * @fileOverview Agata, el asistente virtual del proyecto BMG Colombia.
  *
  * - askAgata - A function that handles user queries.
  * - AskAgataInput - The input type for the askAgata function.
@@ -93,7 +93,7 @@ Estilo:
 - Orientado a guiar y resolver.`;
 
     const {text} = await ai.generate({
-      model: googleAI.model('gemini-1.5-flash-latest'),
+      model: googleAI.model('gemini-1.5-flash'),
       system: systemPrompt,
       prompt: question,
       history: history || [],
