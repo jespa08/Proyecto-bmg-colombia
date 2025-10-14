@@ -137,12 +137,15 @@ const voiceAgentFlow = ai.defineFlow(
     outputSchema: VoiceOutputSchema,
   },
   async ({ history, query }) => {
+    // Construct the history for the AI model
+    const aiHistory = history.map(m => ({ role: m.role, content: [{ text: m.content }] }));
+
     // 1. Generate text and audio in parallel.
     const [textResult, audioResult] = await Promise.all([
       // Generate a text response from the conversation history and the new query.
       ai.generate({
         prompt: query,
-        history: history.map(m => ({ role: m.role, content: [{ text: m.content }] })),
+        history: aiHistory,
         system: systemPrompt,
       }),
       // Generate audio from the text response. We run this in parallel and assume
@@ -159,7 +162,7 @@ const voiceAgentFlow = ai.defineFlow(
           },
         },
         prompt: query, // Use the same prompt as the text generation
-        history: history.map(m => ({ role: m.role, content: [{ text: m.content }] })),
+        history: aiHistory,
         system: systemPrompt,
       }),
     ]);
