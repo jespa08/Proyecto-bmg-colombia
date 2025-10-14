@@ -11,6 +11,7 @@ import { TestimonialSection } from '@/components/landing/testimonial-section';
 import { AnimatedSection } from '@/components/landing/animated-section';
 import { CreditCardSection } from '@/components/landing/credit-card-section';
 import { CorporateMissionSection } from '@/components/landing/corporate-mission-section';
+import { AgataAssistant } from '@/components/landing/agata-assistant';
 
 export default function Home() {
   return (
@@ -47,6 +48,7 @@ export default function Home() {
         <CtaSection />
       </main>
       <Footer />
+      <AgataAssistant />
     </div>
   );
 }
