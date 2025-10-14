@@ -9,7 +9,7 @@ import { ai } from '@/ai/genkit';
 import { googleAI } from '@genkit-ai/google-genai';
 import { z } from 'zod';
 import wav from 'wav';
-import { Readable } from 'stream';
+import { type Part } from 'genkit';
 
 // Define the schema for a single message in the conversation
 const MessageSchema = z.object({
@@ -149,7 +149,7 @@ const voiceAgentFlow = ai.defineFlow(
   },
   async ({ history, query }) => {
     // Construct the history for the AI model
-    const aiHistory = history.map(m => ({
+    const aiHistory: Part[] = history.map(m => ({
       role: m.role,
       content: [{ text: m.content }],
     }));
