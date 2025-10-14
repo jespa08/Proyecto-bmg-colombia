@@ -156,7 +156,7 @@ const voiceAgentFlow = ai.defineFlow(
 
     // 1. Generate text response first.
     const textResult = await ai.generate({
-      model: googleAI.model('gemini-1.5-flash-latest'),
+      model: googleAI.model('gemini-1.5-flash'),
       prompt: query,
       history: aiHistory,
       system: systemPrompt,
