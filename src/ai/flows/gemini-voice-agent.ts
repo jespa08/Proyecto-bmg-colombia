@@ -147,10 +147,10 @@ const voiceAgentFlow = ai.defineFlow(
     outputSchema: VoiceOutputSchema,
   },
   async ({ history, query }) => {
-    // Construct the history for the AI model
-    const aiHistory = history.map(m => ({
-      role: m.role,
-      content: [{ text: m.content }],
+    // Construct the history for the AI model, ensuring the correct format.
+    const aiHistory = history.map(msg => ({
+      role: msg.role,
+      content: [{ text: msg.content }],
     }));
 
     // 1. Generate text response first.
@@ -202,7 +202,7 @@ const voiceAgentFlow = ai.defineFlow(
       console.error('Audio generation failed, returning text only.', e);
     }
 
-    // Fallback to text only
+    // Fallback to text only if audio generation fails
     return { text: cleanText };
   }
 );
