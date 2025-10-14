@@ -121,7 +121,7 @@ export function GeminiVoiceAssistant() {
       <button
         onClick={() => setIsChatOpen(true)}
         className="fixed bottom-4 right-24 z-[1001] flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-primary text-primary-foreground shadow-2xl transition-transform hover:scale-110 hover:bg-primary/90"
-        title="Hablar con el asistente de voz"
+        title="Asistente de Información"
       >
         <Mic className="h-8 w-8" />
       </button>
@@ -137,7 +137,7 @@ export function GeminiVoiceAssistant() {
           >
             <Card className="flex h-[60vh] flex-col">
               <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Asistente de Voz</CardTitle>
+                <CardTitle>Asistente de Información</CardTitle>
                 <Button variant="ghost" size="icon" onClick={() => setIsChatOpen(false)}>
                   <X className="h-4 w-4" />
                 </Button>
