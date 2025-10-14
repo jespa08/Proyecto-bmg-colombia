@@ -204,7 +204,7 @@ export function AgataAssistant() {
       >
         <Button
           onClick={() => setIsOpen(!isOpen)}
-          className="fixed bottom-4 right-4 z-40 h-14 w-14 rounded-full bg-primary shadow-2xl transition-transform hover:scale-110"
+          className="fixed bottom-4 right-4 z-40 h-14 w-14 rounded-full bg-purple-600 text-white shadow-2xl transition-transform hover:scale-110 hover:bg-purple-700"
           aria-label="Abrir chat de Agata"
         >
           {isOpen ? <X className="h-7 w-7" /> : <Bot className="h-7 w-7" />}
