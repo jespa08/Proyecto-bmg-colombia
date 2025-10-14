@@ -162,39 +162,43 @@ const voiceAgentFlow = ai.defineFlow(
     const cleanedTextResponse = textResponse.trim();
     const pronunciationText = cleanedTextResponse.replace(/BMG/g, 'Bi Em Yi');
     
-    // 2. Generate audio from the generated text response.
-    const audioResult = await ai.generate({
-      model: googleAI.model('gemini-1.5-flash-preview-tts'),
-      config: {
-        responseModalities: ['AUDIO'],
-        speechConfig: {
-          voiceConfig: {
-            prebuiltVoiceConfig: { voiceName: 'Algenib' },
+    try {
+      // 2. Generate audio from the generated text response.
+      const audioResult = await ai.generate({
+        model: googleAI.model('gemini-1.5-flash-preview-tts'),
+        config: {
+          responseModalities: ['AUDIO'],
+          speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: { voiceName: 'Algenib' },
+            },
           },
         },
-      },
-      prompt: pronunciationText, // Use the pronunciation-adjusted text for TTS
-    });
+        prompt: pronunciationText, // Use the pronunciation-adjusted text for TTS
+      });
 
-    const { media } = audioResult;
+      const { media } = audioResult;
 
-    if (!media || !media.url) {
-      // If audio generation fails but we don't have an error, return text only.
-      return { text: textResponse };
+      if (media && media.url) {
+        // 3. Convert the raw PCM audio data to WAV format.
+        const pcmData = Buffer.from(
+          media.url.substring(media.url.indexOf(',') + 1),
+          'base64'
+        );
+        const wavData = await toWav(pcmData);
+  
+        // 4. Return both the original text and the base64 encoded WAV audio.
+        return {
+          text: textResponse,
+          audio: `data:audio/wav;base64,${wavData}`,
+        };
+      }
+    } catch (e) {
+      console.error('Audio generation failed, returning text only.', e);
     }
 
-    // 3. Convert the raw PCM audio data to WAV format.
-    const pcmData = Buffer.from(
-      media.url.substring(media.url.indexOf(',') + 1),
-      'base64'
-    );
-    const wavData = await toWav(pcmData);
-
-    // 4. Return both the original text and the base64 encoded WAV audio.
-    return {
-      text: textResponse,
-      audio: `data:audio/wav;base64,${wavData}`,
-    };
+    // Fallback to text only
+    return { text: textResponse };
   }
 );
 
