@@ -93,8 +93,10 @@ Estilo:
 - Orientado a guiar y resolver.`;
 
     const {text} = await ai.generate({
+      model: googleAI.model('gemini-1.5-flash'),
+      system: systemPrompt,
       prompt: question,
-      history: [{role: 'system', content: systemPrompt}, ...(history || [])],
+      history: history || [],
       config: {
         temperature: 0.7,
       },
