@@ -167,7 +167,7 @@ const voiceAgentFlow = ai.defineFlow(
     try {
       // 2. Generate audio from the generated text response.
       const audioResult = await ai.generate({
-        model: googleAI.model('gemini-1.5-flash-preview-tts'),
+        model: googleAI.model('gemini-1.5-flash-tts'),
         config: {
           responseModalities: ['AUDIO'],
           speechConfig: {
