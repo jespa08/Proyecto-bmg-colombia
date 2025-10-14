@@ -140,48 +140,43 @@ const voiceAgentFlow = ai.defineFlow(
     // Construct the history for the AI model
     const aiHistory = history.map(m => ({ role: m.role, content: [{ text: m.content }] }));
 
-    // 1. Generate text and audio in parallel.
-    const [textResult, audioResult] = await Promise.all([
-      // Generate a text response from the conversation history and the new query.
-      ai.generate({
-        prompt: query,
-        history: aiHistory,
-        system: systemPrompt,
-      }),
-      // Generate audio from the text response. We run this in parallel and assume
-      // the LLM will generate roughly the same text for the audio generation prompt.
-      // This is an optimistic optimization for speed.
-      ai.generate({
-        model: googleAI.model('gemini-2.5-flash-preview-tts'),
-        config: {
-          responseModalities: ['AUDIO'],
-          speechConfig: {
-            voiceConfig: {
-              prebuiltVoiceConfig: { voiceName: 'Algenib' },
-            },
-          },
-        },
-        prompt: query, // Use the same prompt as the text generation
-        history: aiHistory,
-        system: systemPrompt,
-      }),
-    ]);
+    // 1. Generate text response first.
+    const textResult = await ai.generate({
+      prompt: query,
+      history: aiHistory,
+      system: systemPrompt,
+    });
 
     const { text: textResponse } = textResult;
+
+    // 2. Generate audio from the generated text response.
+    const audioResult = await ai.generate({
+      model: googleAI.model('gemini-2.5-flash-preview-tts'),
+      config: {
+        responseModalities: ['AUDIO'],
+        speechConfig: {
+          voiceConfig: {
+            prebuiltVoiceConfig: { voiceName: 'Algenib' },
+          },
+        },
+      },
+      prompt: textResponse, // Use the generated text for TTS
+    });
+
     const { media } = audioResult;
 
     if (!media || !media.url) {
       throw new Error('Audio generation failed: no media returned.');
     }
 
-    // 2. Convert the raw PCM audio data to WAV format.
+    // 3. Convert the raw PCM audio data to WAV format.
     const pcmData = Buffer.from(
       media.url.substring(media.url.indexOf(',') + 1),
       'base64'
     );
     const wavData = await toWav(pcmData);
 
-    // 3. Return both the text and the base64 encoded WAV audio.
+    // 4. Return both the text and the base64 encoded WAV audio.
     return {
       text: textResponse,
       audio: `data:audio/wav;base64,${wavData}`,
