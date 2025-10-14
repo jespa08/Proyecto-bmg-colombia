@@ -1,24 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export function AgataAssistant() {
   const [mostrarChat, setMostrarChat] = useState(false);
-
-  useEffect(() => {
-    if (mostrarChat) {
-      const scriptId = 'elevenlabs-widget-script';
-      if (!document.getElementById(scriptId)) {
-        const script = document.createElement('script');
-        script.id = scriptId;
-        script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
-        script.async = true;
-        script.type = 'text/javascript';
-        document.body.appendChild(script);
-      }
-    }
-  }, [mostrarChat]);
 
   return (
     <>
@@ -37,9 +23,12 @@ export function AgataAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="fixed bottom-24 right-5 z-[1000] rounded-2xl bg-white p-2.5 shadow-2xl"
+            className="fixed bottom-24 right-5 z-[1000] w-80 rounded-2xl bg-white p-4 text-center shadow-2xl"
           >
-            <elevenlabs-convai agent-id="YOUR_AGENT_ID"></elevenlabs-convai>
+            <h3 className="text-lg font-bold text-gray-800">Asistente Virtual</h3>
+            <p className="mt-2 text-sm text-gray-600">
+              Estamos configurando nuestro asistente. ¡Pronto estará disponible para ayudarte!
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
