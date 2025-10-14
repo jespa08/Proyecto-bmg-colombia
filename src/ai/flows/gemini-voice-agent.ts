@@ -158,9 +158,8 @@ const voiceAgentFlow = ai.defineFlow(
       system: systemPrompt,
     });
 
-    // Clean up the text response by removing markdown characters.
-    const rawTextResponse = textResult.text.trim();
-    const cleanText = rawTextResponse.replace(/[*#]/g, '');
+    const rawTextResponse = textResult.text;
+    const cleanText = rawTextResponse.replace(/[*#]/g, '').trim();
 
     // Prepare a version of the text for pronunciation.
     const pronunciationText = cleanText.replace(/BMG/g, 'Bi Em Yi');
@@ -240,10 +239,6 @@ async function toWav(
     writer.on('end', () => resolve(Buffer.concat(chunks).toString('base64')));
     writer.on('error', reject);
 
-    // Create a readable stream from the PCM data and pipe it to the WAV writer.
-    const readable = new Readable();
-    readable.push(pcmData);
-    readable.push(null); // Signal end of stream
-    readable.pipe(writer);
+    writer.end(pcmData);
   });
 }
