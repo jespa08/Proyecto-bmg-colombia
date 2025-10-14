@@ -149,7 +149,7 @@ const voiceAgentFlow = ai.defineFlow(
   },
   async ({ history, query }) => {
     // Construct the history for the AI model
-    const aiHistory: Part[] = history.map(m => ({
+    const aiHistory = history.map(m => ({
       role: m.role,
       content: [{ text: m.content }],
     }));
