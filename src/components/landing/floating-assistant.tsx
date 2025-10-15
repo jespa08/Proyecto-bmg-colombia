@@ -1,93 +1,99 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 
 export function FloatingAssistant() {
   const containerRef = useRef<HTMLDivElement>(null);
   const messageRef = useRef<HTMLDivElement>(null);
   const initialized = useRef(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    if (initialized.current || !containerRef.current || !messageRef.current) return;
-    initialized.current = true;
+  const showTemporaryMessageRef = useRef<() => void>();
+  const loadAgataRef = useRef<() => void>();
 
-    const container = containerRef.current;
+  const showTemporaryMessage = useCallback(() => {
     const message = messageRef.current;
-    let interactionCheckInterval: NodeJS.Timeout;
-
-    const showTemporaryMessage = () => {
+    if (message) {
       message.style.display = 'flex';
       setTimeout(() => {
         message.style.display = 'none';
-        loadAgata(); // Reintenta cargar Ágata automáticamente
+        loadAgataRef.current?.();
       }, 8000);
-    };
-
-    const loadAgata = () => {
-      // Limpiar intervalo anterior si existe
-      if (interactionCheckInterval) {
-        clearInterval(interactionCheckInterval);
-      }
-
-      // Eliminar widget anterior si existía
-      const oldWidget = container.querySelector('elevenlabs-convai');
-      if (oldWidget) {
-        oldWidget.remove();
-      }
-
-      // Cargar el script del widget de ElevenLabs
-      const script = document.createElement('script');
-      script.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
-      script.async = true;
-      script.type = "text/javascript";
-
-      script.onload = () => {
-        const widget = document.createElement('elevenlabs-convai');
-        widget.setAttribute('agent-id', 'agent_4201k7hxveqgf0zbet4c8zd1sn8a');
-        container.appendChild(widget);
-
-        let hasInteracted = false;
-
-        const handleInteraction = () => {
-            hasInteracted = true;
-            // Una vez que hay interacción, ya no necesitamos escuchar
-            container.removeEventListener('click', handleInteraction);
-            container.removeEventListener('keypress', handleInteraction);
-        };
-        
-        container.addEventListener('click', handleInteraction);
-        container.addEventListener('keypress', handleInteraction);
-        
-        interactionCheckInterval = setInterval(() => {
-            const widgetElement = container.querySelector('elevenlabs-convai');
-            const isBroken =
-              !widgetElement ||
-              (widgetElement.shadowRoot && widgetElement.shadowRoot.innerHTML.includes('error'));
-
-            if (hasInteracted && isBroken) {
-              // Limpiamos el intervalo actual para evitar múltiples llamadas
-              clearInterval(interactionCheckInterval);
-              showTemporaryMessage();
-            }
-        }, 5000);
-      };
-      
-      script.onerror = () => {
-        showTemporaryMessage();
-      };
-
-      document.body.appendChild(script);
-
-      // Limpieza al desmontar el componente
-      return () => {
-        if (interactionCheckInterval) clearInterval(interactionCheckInterval);
-        document.body.removeChild(script);
-      };
-    };
-
-    loadAgata();
-
+    }
   }, []);
+
+  const loadAgata = useCallback(() => {
+    if (!containerRef.current) return;
+
+    const oldWidget = containerRef.current.querySelector('elevenlabs-convai');
+    if (oldWidget) {
+      oldWidget.remove();
+    }
+
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    const script = document.createElement('script');
+    script.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
+    script.async = true;
+    script.type = "text/javascript";
+
+    script.onload = () => {
+      if (!containerRef.current) return;
+      
+      const widget = document.createElement('elevenlabs-convai');
+      widget.setAttribute('agent-id', 'agent_4201k7hxveqgf0zbet4c8zd1sn8a');
+      containerRef.current.appendChild(widget);
+
+      let hasInteracted = false;
+
+      const handleInteraction = () => {
+        hasInteracted = true;
+        containerRef.current?.removeEventListener('click', handleInteraction);
+        containerRef.current?.removeEventListener('keypress', handleInteraction);
+      };
+
+      containerRef.current.addEventListener('click', handleInteraction);
+      containerRef.current.addEventListener('keypress', handleInteraction);
+
+      intervalRef.current = setInterval(() => {
+        const widgetElement = containerRef.current?.querySelector('elevenlabs-convai');
+        const isBroken =
+          !widgetElement ||
+          (widgetElement.shadowRoot && widgetElement.shadowRoot.innerHTML.includes('error'));
+
+        if (hasInteracted && isBroken) {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+            showTemporaryMessageRef.current?.();
+        }
+      }, 5000);
+    };
+
+    script.onerror = () => {
+      showTemporaryMessageRef.current?.();
+    };
+
+    document.body.appendChild(script);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    showTemporaryMessageRef.current = showTemporaryMessage;
+    loadAgataRef.current = loadAgata;
+  }, [showTemporaryMessage, loadAgata]);
+
+  useEffect(() => {
+    if (initialized.current) return;
+    initialized.current = true;
+    loadAgata();
+  }, [loadAgata]);
 
   return (
     <div ref={containerRef} style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 1000, textAlign: 'center' }}>
