@@ -1,36 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 export function FloatingAssistant() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
   useEffect(() => {
-    /*
-      =========================================================================================
-      NOTA IMPORTANTE: El agente de ElevenLabs ha sido deshabilitado temporalmente.
-      =========================================================================================
-      
-      El widget está mostrando un error persistente: 
-      "[ConversationalAI] Disconnected due to an error: 'The AI agent you are trying to reach appears to be misconfigured'".
-
-      Este error indica un problema de CONFIGURACIÓN en la plataforma de ElevenLabs, no en el código de esta aplicación.
-      
-      Para solucionarlo, debes:
-      1. Iniciar sesión en tu cuenta de ElevenLabs.
-      2. Navegar a la configuración de tu agente de voz conversacional (ID: agent_4201k7hxveqgf0zbet4c8zd1sn8a).
-      3. Asegurarte de que el agente esté completamente configurado, publicado y activado.
-
-      Una vez que hayas verificado y corregido la configuración en ElevenLabs, puedes descomentar
-      el siguiente bloque de código para reactivar el asistente en la página.
-      
-      =========================================================================================
-    */
-
-    /*
     // Evita volver a añadir el script si ya existe
     if (document.querySelector('script[src="https://unpkg.com/@elevenlabs/convai-widget-embed"]')) {
-      setIsLoaded(true);
       return;
     }
 
@@ -40,39 +15,59 @@ export function FloatingAssistant() {
     script.type = "text/javascript";
 
     script.onload = () => {
-      setIsLoaded(true);
+      const container = document.getElementById('agata-widget-container');
+      const message = document.getElementById('agata-message');
+
+      if (!container || !message) return;
+      
+      // Crear y añadir el widget
+      const widget = document.createElement('elevenlabs-convai');
+      widget.setAttribute('agent-id', 'agent_4201k7hxveqgf0zbet4c8zd1sn8a');
+      container.appendChild(widget);
+
+      // Si en 5 segundos no se muestra el widget, dejamos el mensaje visible
+      setTimeout(() => {
+        const isVisible = widget.shadowRoot && widget.shadowRoot.innerHTML.length > 0;
+        if (isVisible) {
+          if(message) message.style.display = "none";
+        } else {
+          if(message) message.style.display = "flex";
+          widget.remove(); // Limpiar el widget si no cargó
+        }
+      }, 5000);
     };
 
     script.onerror = () => {
-      console.error("No fue posible conectar con el asistente. El script de ElevenLabs no se pudo cargar.");
+      const message = document.getElementById('agata-message');
+      if (message) {
+        message.style.display = "flex";
+      }
     };
 
     document.body.appendChild(script);
 
-    return () => {
-      const existingScript = document.querySelector('script[src="https://unpkg.com/@elevenlabs/convai-widget-embed"]');
-      if (existingScript && existingScript.parentElement) {
-        // Opcional: Limpiar el script al desmontar, aunque para un widget flotante puede que no sea necesario.
-        // existingScript.parentElement.removeChild(existingScript);
-      }
-      const widget = document.querySelector('elevenlabs-convai');
-      if (widget && widget.parentElement) {
-        // widget.parentElement.removeChild(widget);
-      }
-    };
-    */
   }, []);
-
-  // No se renderiza nada hasta que se solucione la configuración externa y se reactive el código.
-  if (!isLoaded) {
-    return null;
-  }
 
   return (
     <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 1000 }}>
-        {/*
-        <elevenlabs-convai agent-id="agent_4201k7hxveqgf0zbet4c8zd1sn8a"></elevenlabs-convai>
-        */}
+      <div id="agata-widget-container"></div>
+      <div id="agata-message" style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          gap: '10px',
+          fontFamily: "'Segoe UI', sans-serif",
+          color: '#444',
+          background: '#eef3f9',
+          padding: '20px',
+          borderRadius: '12px',
+          maxWidth: '300px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        }}>
+        <strong>🌐 Ágata está en actualización</strong>
+        <span style={{textAlign: 'center'}}>Pronto volverá para ofrecerte un mejor servicio 💬</span>
+      </div>
     </div>
   );
 }
