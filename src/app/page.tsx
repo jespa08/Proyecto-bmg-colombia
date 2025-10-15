@@ -12,6 +12,7 @@ import { AnimatedSection } from '@/components/landing/animated-section';
 import { CreditCardSection } from '@/components/landing/credit-card-section';
 import { CorporateMissionSection } from '@/components/landing/corporate-mission-section';
 import { NewsSection } from '@/components/landing/news-section';
+import { ElevenLabsAssistant } from '@/components/landing/elevenlabs-assistant';
 
 export default function Home() {
   return (
@@ -47,6 +48,9 @@ export default function Home() {
         </AnimatedSection>
         <AnimatedSection id="news" className="bg-muted py-16 md:py-24 lg:py-32" showWaves showZigzag>
           <NewsSection />
+        </AnimatedSection>
+        <AnimatedSection id="assistant" className="py-16 md:py-24 lg:py-32" showWaves>
+          <ElevenLabsAssistant />
         </AnimatedSection>
         <CtaSection />
       </main>
