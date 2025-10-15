@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 
 export function FloatingAssistant() {
   useEffect(() => {
-    // Evita volver a añadir el script si ya existe
     if (document.querySelector('script[src="https://unpkg.com/@elevenlabs/convai-widget-embed"]')) {
       return;
     }
@@ -20,19 +19,17 @@ export function FloatingAssistant() {
 
       if (!container || !message) return;
       
-      // Crear y añadir el widget
       const widget = document.createElement('elevenlabs-convai');
       widget.setAttribute('agent-id', 'agent_4201k7hxveqgf0zbet4c8zd1sn8a');
       container.appendChild(widget);
 
-      // Si en 5 segundos no se muestra el widget, dejamos el mensaje visible
       setTimeout(() => {
-        const isVisible = widget.shadowRoot && widget.shadowRoot.innerHTML.length > 0;
-        if (isVisible) {
-          if(message) message.style.display = "none";
+        const isWidgetRendered = widget.shadowRoot && widget.shadowRoot.innerHTML.length > 0;
+        if (isWidgetRendered) {
+          if (message) message.style.display = "none";
         } else {
-          if(message) message.style.display = "flex";
-          widget.remove(); // Limpiar el widget si no cargó
+          if (message) message.style.display = "flex";
+          widget.remove();
         }
       }, 5000);
     };
@@ -50,23 +47,25 @@ export function FloatingAssistant() {
 
   return (
     <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 1000 }}>
-      <div id="agata-widget-container"></div>
-      <div id="agata-message" style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          gap: '10px',
-          fontFamily: "'Segoe UI', sans-serif",
-          color: '#444',
-          background: '#eef3f9',
-          padding: '20px',
-          borderRadius: '12px',
-          maxWidth: '300px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-        }}>
-        <strong>🌐 Ágata está en actualización</strong>
-        <span style={{textAlign: 'center'}}>Pronto volverá para ofrecerte un mejor servicio 💬</span>
+      <div id="agata-widget-container">
+        <div id="agata-message" style={{
+            display: 'none',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            gap: '10px',
+            fontFamily: "'Segoe UI', sans-serif",
+            color: '#444',
+            background: '#eef3f9',
+            padding: '20px',
+            borderRadius: '12px',
+            width: '320px',
+            height: '400px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          }}>
+          <strong>🌐 Ágata está en actualización</strong>
+          <span style={{textAlign: 'center'}}>Pronto volverá para ofrecerte un mejor servicio 💬</span>
+        </div>
       </div>
     </div>
   );
