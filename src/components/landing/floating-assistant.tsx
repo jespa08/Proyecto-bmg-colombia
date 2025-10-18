@@ -96,7 +96,7 @@ export function FloatingAssistant() {
   }, [loadAgata]);
 
   return (
-    <div ref={containerRef} style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 1000, textAlign: 'center' }}>
+    <div ref={containerRef} style={{ position: 'fixed', bottom: '20px', left: '20px', zIndex: 1000, textAlign: 'center' }}>
       <div ref={messageRef} style={{
         display: 'none',
         justifyContent: 'center',
