@@ -5,11 +5,7 @@ export function Footer() {
   return (
     <footer className="w-full bg-black py-8 text-neutral-400">
       <div className="container mx-auto flex flex-col items-center justify-center gap-6 px-4 text-center md:px-6">
-        <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row">
-          <h3 className="font-headline text-2xl font-bold tracking-tighter text-white">
-            BMG<span className="text-primary">.</span>
-          </h3>
-          <p className="text-sm">“Música sin fronteras, amor sin límites.”</p>
+        <div className="flex w-full flex-col items-center justify-center gap-4">
           <div className="flex items-center gap-4">
             <Link
               href="https://www.instagram.com/thenewbmg/"
@@ -48,6 +44,10 @@ export function Footer() {
               <Globe className="h-5 w-5" />
             </Link>
           </div>
+          <h3 className="font-headline text-2xl font-bold tracking-tighter text-white">
+            BMG<span className="text-primary">.</span>
+          </h3>
+          <p className="text-sm">“Música sin fronteras, amor sin límites.”</p>
         </div>
         <p className="text-xs">
           © 2025 BMG Rights Management (UK) – Proyecto BMG Colombia
