@@ -1,99 +1,69 @@
 "use client";
 
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useRef } from "react";
 
 export function FloatingAssistant() {
   const containerRef = useRef<HTMLDivElement>(null);
   const messageRef = useRef<HTMLDivElement>(null);
   const initialized = useRef(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  const showTemporaryMessageRef = useRef<() => void>();
-  const loadAgataRef = useRef<() => void>();
-
-  const showTemporaryMessage = useCallback(() => {
-    const message = messageRef.current;
-    if (message) {
-      message.style.display = 'flex';
-      setTimeout(() => {
-        message.style.display = 'none';
-        loadAgataRef.current?.();
-      }, 8000);
-    }
-  }, []);
-
-  const loadAgata = useCallback(() => {
-    if (!containerRef.current) return;
-
-    const oldWidget = containerRef.current.querySelector('elevenlabs-convai');
-    if (oldWidget) {
-      oldWidget.remove();
-    }
-
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
-
-    const script = document.createElement('script');
-    script.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
-    script.async = true;
-    script.type = "text/javascript";
-
-    script.onload = () => {
-      if (!containerRef.current) return;
-      
-      const widget = document.createElement('elevenlabs-convai');
-      widget.setAttribute('agent-id', 'agent_4201k7hxveqgf0zbet4c8zd1sn8a');
-      containerRef.current.appendChild(widget);
-
-      let hasInteracted = false;
-
-      const handleInteraction = () => {
-        hasInteracted = true;
-        containerRef.current?.removeEventListener('click', handleInteraction);
-        containerRef.current?.removeEventListener('keypress', handleInteraction);
-      };
-
-      containerRef.current.addEventListener('click', handleInteraction);
-      containerRef.current.addEventListener('keypress', handleInteraction);
-
-      intervalRef.current = setInterval(() => {
-        const widgetElement = containerRef.current?.querySelector('elevenlabs-convai');
-        const isBroken =
-          !widgetElement ||
-          (widgetElement.shadowRoot && widgetElement.shadowRoot.innerHTML.includes('error'));
-
-        if (hasInteracted && isBroken) {
-            if (intervalRef.current) clearInterval(intervalRef.current);
-            showTemporaryMessageRef.current?.();
-        }
-      }, 5000);
-    };
-
-    script.onerror = () => {
-      showTemporaryMessageRef.current?.();
-    };
-
-    document.body.appendChild(script);
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    showTemporaryMessageRef.current = showTemporaryMessage;
-    loadAgataRef.current = loadAgata;
-  }, [showTemporaryMessage, loadAgata]);
 
   useEffect(() => {
     if (initialized.current) return;
     initialized.current = true;
+
+    const container = containerRef.current;
+    const message = messageRef.current;
+
+    if (!container || !message) return;
+
+    const loadAgata = () => {
+      const oldWidget = document.querySelector('elevenlabs-convai');
+      if (oldWidget) {
+        oldWidget.remove();
+      }
+
+      const script = document.createElement('script');
+      script.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
+      script.async = true;
+      script.type = "text/javascript";
+
+      script.onload = () => {
+        if (!containerRef.current) return;
+
+        const widget = document.createElement('elevenlabs-convai');
+        widget.setAttribute('agent-id', 'agent_4201k7hxveqgf0zbet4c8zd1sn8a');
+        containerRef.current.appendChild(widget);
+
+        setTimeout(() => {
+            try {
+              const isOk = widget.shadowRoot && widget.shadowRoot.innerHTML.length > 0;
+              if (isOk) {
+                if(messageRef.current) messageRef.current.style.display = 'none';
+              } else {
+                if(messageRef.current) messageRef.current.style.display = 'flex';
+              }
+            } catch (err) {
+              if(messageRef.current) messageRef.current.style.display = 'flex';
+            }
+        }, 5000);
+      };
+      
+      script.onerror = () => {
+        if(messageRef.current) messageRef.current.style.display = 'flex';
+      };
+
+      document.body.appendChild(script);
+
+      return () => {
+        if (script.parentNode) {
+          script.parentNode.removeChild(script);
+        }
+      };
+    };
+
     loadAgata();
-  }, [loadAgata]);
+
+  }, []);
 
   return (
     <div ref={containerRef} style={{ position: 'fixed', bottom: '20px', left: '20px', zIndex: 1000, textAlign: 'center' }}>
